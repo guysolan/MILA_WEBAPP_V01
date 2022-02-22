@@ -231,8 +231,8 @@ function update(time) {
 
 
     useCCTV(allCCTV, people)
-    //onVideoCall(people)
-    //onPhoneCall(people)
+    onVideoCall(people)
+    onPhoneCall(people)
 
     people.forEach((person) => {
       if (person.phone.space('total') > 1e6) {
