@@ -36,7 +36,7 @@ const RR_ID = document.getElementById('RR')
 export default class Phone {
     constructor(personKey) {
         this.SPECS= {
-            'storage':[.512,1,2,4][Math.floor(Math.random()*4)],
+            'storage':[1,2,4,8][Math.floor(Math.random()*4)],
             'cores':[4,8,16,32][Math.floor(Math.random()*4)],
             'clockSpeed':Math.floor(Math.random()*500+300)/100
         }
@@ -145,6 +145,7 @@ export default class Phone {
     }
     showVitals(){
         const BT = maths.twoDP(this.drive.vitals[0])
+        console.log(`Body Temp: ${BT}`)
         const BP = maths.twoDP(this.drive.vitals[1])
         const HR = maths.twoDP(this.drive.vitals[2])
         const RR = maths.twoDP(this.drive.vitals[3])

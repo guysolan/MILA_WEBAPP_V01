@@ -30,113 +30,121 @@
 				<h4 id="day">01</h4>
 
 			</div>
+
+		</div>
+		<div class="blurb-wrap">
+			<h1 class="title">MILA.HEALTH</h1>
+			<!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
+			<div id="all-messages">
+				<p id='intro-words-1' class="hidden">In 2041, big tech giants are trading healthcare diagnosis for data.
+				</p>
+				<p id='intro-words-2' class="hidden">At MILA.HEALTH we are doing our bit to try and harness the new AI
+					capabilities - without invading your privacy.</p>
+				<p id='video-call-message' class="hidden">You just started video calling.<br><br>Watch as your video and
+					audio data gets saved to your personal phone.</p>
+				<p id='phone-call-message' class="hidden">You just started answered your phone.<br><br>Watch as your
+					audio data gets saved to your personal phone.</p>
+				<p id='CCTV-message' class="hidden">You just entered a CCTV area.<br><br>Watch as your
+					video data gets saved to your personal phone.</p>
+
+				<p id='start-learning-1' class="hidden">It has been 24 hrs since insights were last generated.</p>
+				<p id='start-learning-1.1' class="hidden">It has been 24 hrs since insights were last generated.</p>
+				<p id='start-learning-2' class="hidden">First the saved data is processed to find your most recent viatl
+					levels.</p>
+				<p id='start-learning-3' class="hidden">Next, the video data is proccessed giving us data on all vitals.
+				</p>
+				<p id='start-learning-4' class="hidden">These vitals are added to the log of your vitals in phone
+					memory.
+				</p>
+				<p id='start-learning-5' class="hidden">These trends in vitals, along with your medical history can be
+					be
+					fed into the machine learning algorithm.</p>
+				<p id='start-learning-6' class="hidden">The algorithm then produces your updated propensity to a
+					particular
+					disease.</p>
+
+				<p id='intro-more-people' class="hidden">Add more people to the mix to see how your care can
+					improve.
+				</p>
+				<p id='data-stored-message' class="hidden">Your data is stored until 24 hrs since your last check and
+					your
+					phone procesor is idle.<br><br>Then, insights are generated.</p>
+
+			</div>
+			<div id='continue-btn' class="hidden continue-btn">
+				<h5>Continue</h5>
+			</div>
+		</div>
+
+		<div class="phone">
+			<h4>_> Terminal</h4>
+			<div id="terminal">
+				<p id='total-memory'></p>
+				<p id='video-memory'></p>
+				<p id='audio-memory'></p>
+				<div id="vitals-wrap" class="vitals-wrap">
+					<p id='vitals'>Vitals</p>
+					<div class="vitals-row">
+						<p>| Body Temp</p>
+						<p id='BT'></p>
+					</div>
+					<div class="vitals-row">
+						<p>| Blood Press</p>
+						<p id='BP'></p>
+					</div>
+					<div class="vitals-row">
+						<p>| Heart Rate</p>
+						<p id='HR'></p>
+					</div>
+					<div class="vitals-row">
+						<p>| Breathing Rate</p>
+						<p id='RR'></p>
+					</div>
+				</div>
+				<div class="progress">
+					<p id="find"></p>
+					<p id="identify"></p>
+					<p id="extract"></p>
+				</div>
+				<div class="hidden">
+				<p id='risk'>Risk</p>
+				<div class="disease-wrap">
+
+					<div class="disease-row">
+						<p>General</p>
+						<div id='general'></div>
+					</div>
+
+					<div class="disease-row">
+						<p>Heart</p>
+						<div id='heart'></div>
+					</div>
+					<div class="disease-row">
+						<p>Skin</p>
+						<div id='skin'></div>
+					</div>
+					<div class="disease-row">
+						<p>Cancer</p>
+						<div id='cancer'></div>
+					</div>
+
+					<div class="disease-row">
+						<p>Flu</p>
+						<div id='flu'></div>
+					</div>
+					<div class="disease-row">
+						<p>Brain</p>
+						<div id='brain'></div>
+					</div>
+					<div class="disease-row">
+						<p>Lung</p>
+						<div id='lung'></div>
+					</div>
+				</div>
+			</div>
 		
-		</div>
-	<div class="blurb-wrap">
-		<h1 class="title">MILA.HEALTH</h1>
-		<!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
-		<div id="all-messages">
-			<p id='intro-words-1' class="hidden">It is 2041 and AI has taken over healthcare.</p>
-			<p id='intro-words-2' class="hidden">At MILA.HEALTH we are doing our bit to try and harness the new AI
-				capabilities - without invading your privacy.</p>
-			<p id='video-call-message' class="hidden">You just started video calling.<br><br>Watch as your video and
-				audio data gets saved to your personal phone.</p>
-			<p id='phone-call-message' class="hidden">You just started answered your phone.<br><br>Watch as your
-				audio data gets saved to your personal phone.</p>
-			<p id='CCTV-message' class="hidden">You just entered a CCTV area.<br><br>Watch as your
-				video data gets saved to your personal phone.</p>
-
-			<p id='start-learning-1' class="hidden">It has been 24 hrs since insights were last generated.</p>
-			<p id='start-learning-1.1' class="hidden">It has been 24 hrs since insights were last generated.</p>
-			<p id='start-learning-2' class="hidden">First the saved data is processed to find your most recent viatl levels.</p>
-			<p id='start-learning-3' class="hidden">Next, the video data is proccessed giving us data on all vitals.
-			</p>
-			<p id='start-learning-4' class="hidden">These vitals are added to the log of your vitals in phone memory.
-			</p>
-			<p id='start-learning-5' class="hidden">These trends in vitals, along with your medical history can be be
-				fed into the machine learning algorithm.</p>
-			<p id='start-learning-6' class="hidden">The algorithm then produces your updated propensity to a particular
-				disease.</p>
-
-			<p id='intro-more-people' class="hidden">Add more people to the mix to see how your care can
-				improve.
-			</p>
-			<p id='data-stored-message' class="hidden">Your data is stored until 24 hrs since your last check and your
-				phone procesor is idle.<br><br>Then, insights are generated.</p>
-
-		</div>
-		<div id='continue-btn' class="hidden continue-btn">
-			<h5>Continue</h5>
-		</div>
-	</div>
-
-	<div class="phone">
-		<h4>_> Terminal</h4>
-		<div class="memory-wrap">
-			<p id='total-memory'></p>
-			<p id='video-memory'></p>
-			<p id='audio-memory'></p>
-		</div>
-		<div class="vitals-wrap">
-			<p id='vitals'>Vitals</p>
-			<div class="vitals-row">
-				<p>| Body Temp</p>
-				<p id='BT'></p>
-			</div>
-			<div class="vitals-row">
-				<p>| Blood Press</p>
-				<p id='BP'></p>
-			</div>
-			<div class="vitals-row">
-				<p>| Heart Rate</p>
-				<p id='HR'></p>
-			</div>
-			<div class="vitals-row">
-				<p>| Breathing Rate</p>
-				<p id='RR'></p>
 			</div>
 		</div>
-		<div class="progress">
-			<p id="find"></p>
-			<p id="identify"></p>
-			<p id="extract"></p>
-		</div>
-		<p id='risk'>Risk</p>
-		<div class="disease-wrap">
-
-			<div class="disease-row">
-				<p>General</p>
-				<div id='general'></div>
-			</div>
-
-			<div class="disease-row">
-				<p>Heart</p>
-				<div id='heart'></div>
-			</div>
-			<div class="disease-row">
-				<p>Skin</p>
-				<div id='skin'></div>
-			</div>
-			<div class="disease-row">
-				<p>Cancer</p>
-				<div id='cancer'></div>
-			</div>
-
-			<div class="disease-row">
-				<p>Flu</p>
-				<div id='flu'></div>
-			</div>
-			<div class="disease-row">
-				<p>Brain</p>
-				<div id='brain'></div>
-			</div>
-			<div class="disease-row">
-				<p>Lung</p>
-				<div id='lung'></div>
-			</div>	
-		</div>
-
-	</div>
 	</div>
 	<div class="">
 		<div class="balls-wrap">
