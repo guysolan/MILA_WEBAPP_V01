@@ -5,7 +5,7 @@ const blue_spot = document.getElementById('blue-spot')
 const green_spot = document.getElementById('green-spot')
 const start_V = 0.005
 
-const generatePersonalKey = function() {
+const generatePersonalKey = function () {
     let alpha = new Array(7)
     for (let i = 0; i < alpha.length; i++) {
         alpha[i] = String.fromCharCode(Math.floor(Math.random() * 94) + 32)
@@ -27,7 +27,7 @@ export default class Person {
         // -------Inputs from NHS---------
 
         //Gender Randomly Assigned
-        this.female= [true, false][Math.floor(Math.random()*2)]
+        this.female = [true, false][Math.floor(Math.random() * 2)]
 
         // 
         this.DOB = randomDate(new Date(1942, 0, 1), new Date(2024, 0, 1))
@@ -54,13 +54,15 @@ export default class Person {
     }
 
     appearance(type) {
-        let appearanceFn = function(){return Array()}
+        let appearanceFn = function () {
+            return Array()
+        }
         if (type == 'video') {
             appearanceFn = personFn.videoAppearance
         } else if (type == 'audio') {
             appearanceFn = personFn.audioAppearance
         }
-        return appearanceFn(this.personKey, [this.bodyTemp, this.bloodPressure, this.heartRate, this.breathingRate]) 
+        return appearanceFn(this.personKey, [this.bodyTemp, this.bloodPressure, this.heartRate, this.breathingRate])
     }
 
     takeCall(sensor_classname, spot, prob_on, prob_off, video = false) {
@@ -130,12 +132,12 @@ export default class Person {
         this.velocity = start_V
     }
 
-        updatePosition(delta) {
+    updatePosition(delta) {
 
-        if(Math.round(randomNumberBetween(0,120))==10){
-            this.heartRate += this.heartRate*(randomNumberBetween(0,1)-0.5)*0.01
-            this.breathingRate += this.breathingRate*(randomNumberBetween(0,1)-0.5)*0.01
-            this.bodyTemp += this.bodyTemp*(randomNumberBetween(0,1)-0.5)*0.01
+        if (Math.round(randomNumberBetween(0, 120)) == 10) {
+            this.heartRate += this.heartRate * (randomNumberBetween(0, 1) - 0.5) * 0.01
+            this.breathingRate += this.breathingRate * (randomNumberBetween(0, 1) - 0.5) * 0.01
+            this.bodyTemp += this.bodyTemp * (randomNumberBetween(0, 1) - 0.5) * 0.01
         }
 
         let maxV = 0.5
@@ -189,7 +191,9 @@ export default class Person {
         // -------------------------------------------------------------------------
 
         this.takeCall('video-call', blue_spot, 1200, 200, true)
-        this.takeCall('phone-call', green_spot, 1000, 100, false)
+        if (!(this.personElement.classList.contains('video-call'))) {
+            this.takeCall('phone-call', green_spot, 1000, 100, false)
+        }
 
         // ------------------------------------------------------------------------
 
