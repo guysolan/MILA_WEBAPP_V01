@@ -10,6 +10,19 @@
   --foreground-color: rgba(255,255,255,0.08);
   --coding-green: #25F284;
   --coding-blue: #00E7FF;
+  --coding-red: red
+}
+
+.green{
+  color: var(--coding-green);
+}
+
+.blue{
+  color: var(--coding-blue);
+}
+
+.red{
+  color: red;
 }
 
 .background{
@@ -98,13 +111,28 @@ body {
 }
 
 .phone{
-  width: 22.5vw;
+  width: 40vh;
   height: 90vh;
   background-color: black;
   border: 2px solid rgb(36, 36, 36);
   border-radius: 4rem;
   margin: 5vh 0;
   font-family: 'Inconsolata', monospace;
+  font-size: 0.9rem;
+}
+
+
+
+#terminal{
+  height: 90%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+
+}
+
+#terminal::-webkit-scrollbar {
+  display: none;
 }
 
 .phone h4{
@@ -300,6 +328,10 @@ body {
   background: red
 }
 
+.bar-chart{
+  background: white;
+  height: 1rem;
+}
 
 .vitals-row{
   padding: 0 3rem;
