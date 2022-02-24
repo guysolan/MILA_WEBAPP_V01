@@ -22,8 +22,6 @@ export default class Person {
         //Create a key to represent the users face
         this.personKey = generatePersonalKey()
 
-        this.phone = new Phone(this.personKey)
-
         // -------Inputs from NHS---------
 
         //Gender Randomly Assigned
@@ -40,6 +38,8 @@ export default class Person {
         this.bodyTemp = gaussian(36.6, 0.149) - ((this.getAge() - 50) / 100) * (-0.021)
         this.breathingRate = gaussian(40, 5);
         this.bloodPressure = gaussian(79.1, 14.5) + (this.getAge() - 50) / (randomNumberBetween(3, 8))
+
+        this.phone = new Phone(this.personKey, this.DOB)
 
         this.resetPosition()
     }
