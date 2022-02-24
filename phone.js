@@ -33,8 +33,16 @@ const BP_ID = document.getElementById('BP')
 const HR_ID = document.getElementById('HR')
 const RR_ID = document.getElementById('RR')
 
+const standardise = function(vitals, MEAN_SD) {
+    const output = new Array(4)
+    for (let i = 0; i < 4; i++) {
+        output[i] = (vitals[i] - MEAN_SD[i][0]) / MEAN_SD[i][1]
+    }
+    return output
+}
+
 export default class Phone {
-    constructor(personKey) {
+    constructor(personKey, DOB) {
         this.SPECS= {
             'storage':[1,2,4,8][Math.floor(Math.random()*4)],
             'cores':[4,8,16,32][Math.floor(Math.random()*4)],
@@ -44,18 +52,52 @@ export default class Phone {
             'personKey': personKey,
             'video': new Array(),
             'audio': new Array(),
-            'vitals': new Array(4)
+            'vitals': new Array(4),
+            'conditions': new Object(),
+            'MILA_param': new Object(),
+            'DOB': DOB,
+            'diagnoses_data': new Array()
         }
         this.ALGORITHMS = {
             'humanRecognition': phoneFn.humanRecognition,
             'identify': phoneFn.identify,
             'extractVitals': phoneFn.extractVitals
         }
+        this.NEW_PARAM = 0
     }
     space(drive) {
         if (drive == 'video') {return new TextEncoder().encode(this.drive.video).length}
         if (drive == 'audio') {return new TextEncoder().encode(this.drive.audio).length}
-        if (drive == 'total') {return new TextEncoder().encode(this.drive.audio).length + new TextEncoder().encode(this.drive.video).length}
+        if (drive == 'total') {return new TextEncoder().encode(this.drive.video).length + new TextEncoder().encode(this.drive.audio).length}
+    }
+    getAge() {
+        let ageSeconds = (new Date(2042, 0, 1).getTime() - this.drive.DOB.getTime())
+        return Math.round(ageSeconds / 1000 / 60 / 60 / 24 / 365)
+    }
+    TRAIN_MILA (diagnoses_data) {
+        const vitals = diagnoses_data[0]   
+        const diagnoses = diagnoses_data[1]
+
+        for (let i = 0; i < 5e7; i++) {i**2}
+
+        this.drive.MILA_param = this.drive.MILA_param
+        
+        this.TRAIN_MILA ++
+    }
+    PROCESS_VITALS() {
+        this.drive.MILA_param = CLOUD.GET_MILA_PARAM
+        const param = this.drive.MILA_param
+        const x = standardise(this.drive.vitals, CLOUD.MILA_MEAN_SD)
+
+        const conditions = new Object()
+        const age = this.getAge()/100
+        for (const model in param) {
+            const w = param[model].weight
+            const p = param[model].power
+            conditions[model] = w[0]*(x[0]**p[0]) + w[1]*(x[1]**p[1]) + w[2]*(x[2]**p[2]) + w[3]*(x[3]**p[3]) + w[4]*age + w[5]
+        }
+
+        this.drive.conditions = conditions
     }
     PROCESS_DATA() {
         const find = document.getElementById('find')
