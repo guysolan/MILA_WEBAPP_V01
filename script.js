@@ -10,22 +10,46 @@ import sensorFn from "./sensorFn.js"
 const dataRequirement = 3e6
 
 //SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//
+
 const terminal = document.getElementById('terminal')
+
 const ellipse1 = document.getElementById("ellipse1")
 const ellipse2 = document.getElementById("ellipse2")
 const ellipse3 = document.getElementById("ellipse3")
+
 const CCTV_1 = new CCTV(ellipse1)
 const CCTV_2 = new CCTV(ellipse2)
 const CCTV_3 = new CCTV(ellipse3)
+
 const allCCTV = [CCTV_1, CCTV_2, CCTV_3]
+
 const dateElem = document.getElementById('day')
+
 const sunMoonElem = document.getElementById('sun-and-moon')
+
 const continueBtn = document.getElementById('continue-btn')
+
 const introWords1 = document.getElementById('intro-words-1')
 const introWords2 = document.getElementById('intro-words-2')
+const introWords3 = document.getElementById('intro-words-3')
+
 const videoCallMessage = document.getElementById('video-call-message')
 const phoneCallMessage = document.getElementById('phone-call-message')
 const CCTVMessage = document.getElementById('CCTV-message')
+
+const vitalsMessage1 = document.getElementById('vitals-message-1')
+const vitalsMessage2 = document.getElementById('vitals-message-2')
+const vitalsMessage3 = document.getElementById('vitals-message-3')
+const vitalsMessage4 = document.getElementById('vitals-message-4')
+
+const vitalsTerminalMessage1 = `------------------------------<br>
+<span class="blue">Vital</span> Extraction Initiated
+<br>-----------------------------`
+const vitalsTerminalMessage2 = 'Identifying User...'
+const vitalsTerminalMessage3 = 'Extracting Vitals from Biomarkers...'
+const vitalsTerminalMessage4 = 'Logging Vitals to Phone Memory...'
+
+
 const startLearning1 = document.getElementById('start-learning-1')
 const startLearning11 = document.getElementById('start-learning-1.1')
 const startLearning2 = document.getElementById('start-learning-2')
@@ -49,7 +73,7 @@ let people = [me]
 let pause = false;
 let introCount = 1
 
-me.phone.showVitals()
+// me.phone.showVitals()
 console.log(`PersonKey: ${me.personKey}`)
 console.log(`Female? ${me.female}`)
 console.log(`Age ${me.getAge()} year old`)
@@ -60,6 +84,9 @@ console.log(`Temp ${me.bodyTemp} degrees C`)
 let videoMessageShown = false;
 let phoneMessageShown = false;
 let CCTVMessageShown = false;
+let showVitalsMessages = false
+let vitalsMessagesCount = 0
+
 let processMessageShown = 0;
 let dataStoredMessageShow = false
 
@@ -124,6 +151,12 @@ function useCCTV(CCTV_cameras, people) {
   }
 }
 
+function stopSensors() {
+  me.personElement.classList.remove('CCTV')
+  me.personElement.classList.remove('video-call')
+  me.personElement.classList.remove('phone-call')
+}
+
 //DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//
 function lightIcon(person, icon_id, sensor_classname) {
   const spot = document.getElementById(icon_id)
@@ -145,123 +178,11 @@ function showMessage(message) {
   continueBtn.classList.remove('hidden')
 }
 
-//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//
-function update(time) {
 
-  const delta = time - lastTime
-
-  let audio_memory = document.getElementById('audio-memory')
-  let video_memory = document.getElementById('video-memory')
-  // let total_memory = document.getElementById('total-memory')
-
-  if (lastTime != null && pause !== true) {
-    if (introCount % 500 == 0) {
-      clock.passTime()
-    }
-
-    introCount++;
-
-    if (introCount == startIntro) {
-      showMessage(introWords1);
-
-    } else if (introCount == startIntro + 1) {
-      showMessage(introWords2)
-
-    } else if (introCount === startLearning && processMessageShown == 0) {
-      showMessage(startLearning1)
-
-    } else if (introCount == startLearning + 1 && processMessageShown == 1) {
-      showMessage(startLearning2)
-      me.phone.PROCESS_DATA()
-      me.phone.showVitals()
-      console.log(me.phone.drive.vitals)
-
-    } else if (introCount == startLearning + 2 && processMessageShown == 2) {
-      showMessage(startLearning4)
-
-    } else if (introCount == startLearning + 3 && processMessageShown == 3) {
-      showMessage(startLearning5)
-
-    } else if (introCount == startLearning + 4 && processMessageShown == 4) {
-      showMessage(startLearning6)
-
-    } else if (introCount == startAddingPeople) {
-      showMessage(introMorePeople)
-
-    } else if (introCount === startAddingPeople + 1) {
-      morePeople(18)
-    }
-
-    if (videoMessageShown == false && me.personElement.classList.contains('video-call')) {
-      showMessage(videoCallMessage)
-      videoMessageShown = true
-    }
-    if (phoneMessageShown == false && me.personElement.classList.contains('phone-call')) {
-      showMessage(phoneCallMessage)
-      phoneMessageShown = true
-
-    }
-    if (CCTVMessageShown == false && me.personElement.classList.contains('CCTV')) {
-      showMessage(CCTVMessage)
-      CCTVMessageShown = true
-    }
-
-
-
-
-    diseases.updateGraph()
-
-    people.forEach((person) => {
-      person.updatePosition(delta)
-    })
-
-
-
-    showData('video-call', [video_memory, audio_memory], ['video', 'audio'], ['Video', 'Audio'], ['video-memory', 'audio-memory'], old_video_call_class, 'video', true)
-    // showData('video-call',audio_memory,'audio','Audio','audio-memory',old_video_call_class,'video',true)
-    old_video_call_class = me.personElement.classList.contains('video-call')
-
-    showData('phone-call', [audio_memory], ['audio'], ['Audio'], ['audio-memory'], old_phone_call_class, 'phone', true)
-    old_phone_call_class = me.personElement.classList.contains('phone-call')
-
-    showData('CCTV', [video_memory], ['video'], ['Video'], ['video-memory'], old_CCTV_class, 'CCTV', false)
-    old_CCTV_class = me.personElement.classList.contains('CCTV')
-
-
-
-
-    useCCTV(allCCTV, people)
-    onVideoCall(people)
-    onPhoneCall(people)
-
-    people.forEach((person) => {
-      if (person.phone.space('total') > dataRequirement) {
-        // if (processMessageShown == 0 && person == me) {
-        //   showMessage(startLearning11)
-        // }
-        person.phone.PROCESS_DATA()
-        if (person==me){
-          // startVitalsSequence()
-        }
-        person.phone.showVitals()
-        cloneBottomOfTerminal('vitals-wrap')
-        console.log(person.phone.drive.vitals)
-      }
-    })
-
-    lightIcon(me, 'blue-spot', 'video-call')
-    lightIcon(me, 'red-spot', 'CCTV')
-    lightIcon(me, 'green-spot', 'phone-call')
-
-  }
-
-  lastTime = time
-  window.requestAnimationFrame(update)
-}
 
 let allMessages = Array.from(document.querySelector('#all-messages').children);
 
-continueBtn.addEventListener('click', function unPause() {
+function unPause() {
   pause = false;
   continueBtn.classList.add('hidden')
   allMessages.forEach((message) => {
@@ -269,7 +190,15 @@ continueBtn.addEventListener('click', function unPause() {
       message.classList.add('hidden')
     }
   })
-})
+}
+
+window.onclick = unPause
+
+document.body.onkeydown = function (e) {
+  if (e.keyCode == 32 || 13 || 39) {
+    unPause();
+  }
+}
 
 function cloneBottomOfTerminal(element_id) {
   let element = document.getElementById(element_id);
@@ -314,7 +243,7 @@ function showTotal() {
   totalMemoryElem.innerHTML = `
   Data Requirement: ${maths.twoDP(data.dataInMemory/dataRequirement*100)}% 
   <br><br>
-  <div class='bar-chart' style='width:${data.dataInMemory/dataRequirement*90}%; max-width: 90%'></div>`
+  <div class='bar-chart total' style='width:${data.dataInMemory/dataRequirement*90}%; max-width: 90%'></div>`
 }
 
 function stopStreaming(dataElem, dataName) {
@@ -324,7 +253,6 @@ function stopStreaming(dataElem, dataName) {
 }
 
 function showAction(dataElem, name, call = true) {
-  console.log('here')
   let newAction = document.createElement('p')
   if (call) {
     newAction.innerHTML = `<br>
@@ -347,11 +275,11 @@ function showAction(dataElem, name, call = true) {
 
 function startVitalsSequence() {
   me.stop()
-  messageAfterDelay('Starting User Identification...',10)
-  messageAfterDelay('User Identified',1000)
+  messageAfterDelay('Starting User Identification...', 10)
+  messageAfterDelay('User Identified', 1000)
 }
 
-function messageAfterDelay(words,time){
+function messageAfterDelay(words, time) {
   setTimeout(() => {
     let message = document.createElement('p')
     message.innerHTML = `
@@ -367,7 +295,6 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
   let dataClass = me.personElement.classList.contains(data_className)
 
   if (old_data_class == true) {
-
     showTotal()
     for (let i = 0; i < dataType.length; i++) {
       showMemory(dataType[i], memory_type[i], dataName[i])
@@ -388,6 +315,158 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
 
     }
   }
+}
+
+//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//
+function update(time) {
+
+  const delta = time - lastTime
+
+  let audio_memory = document.getElementById('audio-memory')
+  let video_memory = document.getElementById('video-memory')
+  // let total_memory = document.getElementById('total-memory')
+
+  if (lastTime != null && pause !== true) {
+    if (introCount % 500 == 0) {
+      clock.passTime()
+    }
+
+    // ------------------INTRO SEQUENCE------------------
+
+    introCount++;
+    if (introCount == startIntro) {
+      showMessage(introWords1);
+    } else if (introCount == startIntro + 1) {
+      showMessage(introWords2)
+    } else if (introCount == startIntro + 2) {
+      showMessage(introWords3)
+    } else if (introCount == startIntro + 3) {
+      showMessage(introWords3)
+    }
+
+    // -----------------SENSOR SEQUENCE------------------
+
+    if (videoMessageShown == false && me.personElement.classList.contains('video-call')) {
+      showMessage(videoCallMessage)
+      videoMessageShown = true
+    }
+    if (phoneMessageShown == false && me.personElement.classList.contains('phone-call')) {
+      showMessage(phoneCallMessage)
+      phoneMessageShown = true
+    }
+    if (CCTVMessageShown == false && me.personElement.classList.contains('CCTV')) {
+      showMessage(CCTVMessage)
+      CCTVMessageShown = true
+    }
+
+    // ------------------VITALS SEQUENCE------------------
+    else if (showVitalsMessages == true && vitalsMessagesCount == 0) {
+      stopSensors()
+      showMessage(vitalsMessage1)
+      messageAfterDelay(vitalsTerminalMessage1, 10)
+      vitalsMessagesCount++
+    } else if (showVitalsMessages == true && vitalsMessagesCount == 1) {
+      stopSensors()
+      showMessage(vitalsMessage2)
+      messageAfterDelay(vitalsTerminalMessage2, 10)
+
+      vitalsMessagesCount++
+    } else if (showVitalsMessages == true && vitalsMessagesCount == 2) {
+      stopSensors()
+      showMessage(vitalsMessage3)
+      messageAfterDelay(vitalsTerminalMessage3, 10)
+
+      vitalsMessagesCount++
+    } else if (showVitalsMessages == true && vitalsMessagesCount == 3) {
+      stopSensors()
+      showMessage(vitalsMessage4)
+      messageAfterDelay(vitalsTerminalMessage4, 10)
+      vitalsMessagesCount++
+    } else if (showVitalsMessages == true && vitalsMessagesCount == 4) {
+      stopSensors()
+      cloneBottomOfTerminal('vitals-wrap')
+      vitalsMessagesCount++
+      me.start()
+    }
+
+
+    // -------------------RISK SEQUENCE-------------------
+
+    // else if (introCount === startLearning && processMessageShown == 0) {
+    //   showMessage(startLearning1)
+    // } else if (introCount == startLearning + 1 && processMessageShown == 1) {
+    //   showMessage(startLearning2)
+    //   me.phone.PROCESS_DATA()
+    //   me.phone.showVitals()
+    //   console.log(me.phone.drive.vitals)
+    // } else if (introCount == startLearning + 2 && processMessageShown == 2) {
+    //   showMessage(startLearning4)
+    // } else if (introCount == startLearning + 3 && processMessageShown == 3) {
+    //   showMessage(startLearning5)
+
+    // } else if (introCount == startLearning + 4 && processMessageShown == 4) {
+    //   showMessage(startLearning6)
+    // }
+    else if (introCount == startAddingPeople) {
+      showMessage(introMorePeople)
+
+    } else if (introCount === startAddingPeople + 1) {
+      morePeople(18)
+    }
+
+    diseases.updateGraph()
+
+    people.forEach((person) => {
+      person.updatePosition(delta)
+    })
+
+    showData('video-call', [video_memory, audio_memory], ['video', 'audio'], ['Video', 'Audio'], ['video-memory', 'audio-memory'], old_video_call_class, 'video', true)
+    old_video_call_class = me.personElement.classList.contains('video-call')
+
+    showData('phone-call', [audio_memory], ['audio'], ['Audio'], ['audio-memory'], old_phone_call_class, 'phone', true)
+    old_phone_call_class = me.personElement.classList.contains('phone-call')
+
+    showData('CCTV', [video_memory], ['video'], ['Video'], ['video-memory'], old_CCTV_class, 'CCTV', false)
+    old_CCTV_class = me.personElement.classList.contains('CCTV')
+
+    onVideoCall(people)
+    onPhoneCall(people)
+    useCCTV(allCCTV, people)
+
+    people.forEach((person) => {
+
+      if (person.phone.space('total') > dataRequirement) {
+        person.phone.PROCESS_DATA()
+        person.phone.showVitals()
+        if (person == me && vitalsMessagesCount < 3) {
+          showVitalsMessages = true
+        } else if (person == me && vitalsMessagesCount >= 3) {
+          stopSensors()
+          messageAfterDelay(vitalsTerminalMessage1, 0)
+          messageAfterDelay(vitalsTerminalMessage2, 100)
+          messageAfterDelay(vitalsTerminalMessage3, 200)
+          messageAfterDelay(vitalsTerminalMessage4, 300)
+          setTimeout(() =>cloneBottomOfTerminal('vitals-wrap'),500)
+          setTimeout(()=>me.start(),600)
+        }
+        // me.phone.PROCESS_VITALS()
+        // console.log(me.phone.drive.conditions)
+        // for (const model in me.phone.drive.conditions) {
+        //   if (me.phone.drive.conditions[model] > 0) {
+        //     console.log('ALERT: ' + model)
+        //   }
+        // }
+      }
+    })
+
+    lightIcon(me, 'blue-spot', 'video-call')
+    lightIcon(me, 'red-spot', 'CCTV')
+    lightIcon(me, 'green-spot', 'phone-call')
+
+  }
+
+  lastTime = time
+  window.requestAnimationFrame(update)
 }
 
 window.requestAnimationFrame(update)
