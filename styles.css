@@ -289,7 +289,7 @@ body {
 
 
 #vitals{
-  color:var(--coding-green);
+  color:var(--coding-blue);
 }
 
 #risk{
@@ -329,6 +329,11 @@ body {
 }
 
 .bar-chart{
+  background: white;
+  height: 0.5rem;
+}
+
+.bar-chart.total{
   background: white;
   height: 1rem;
 }
