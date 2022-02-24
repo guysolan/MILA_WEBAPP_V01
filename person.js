@@ -34,10 +34,10 @@ export default class Person {
         //this.age = randomNumberBetween(18, 100) Obscelete?
 
         //Heart Rate, Body Temp and Respitory Rate normally distrubuted and adjusted by age 
-        this.heartRate = gaussian(79.1, 14.5) + (this.getAge() - 50) / (randomNumberBetween(3, 8))
-        this.bodyTemp = gaussian(36.6, 0.149) - ((this.getAge() - 50) / 100) * (-0.021)
-        this.breathingRate = gaussian(40, 5);
-        this.bloodPressure = gaussian(79.1, 14.5) + (this.getAge() - 50) / (randomNumberBetween(3, 8))
+        this.heartRate = gaussian(80, 14.5) + (this.getAge() - 50) / (randomNumberBetween(3, 8))
+        this.bodyTemp = gaussian(37, 0.149) - ((this.getAge() - 50) / 100) * (-0.021)
+        this.breathingRate = gaussian(14, 5);
+        this.bloodPressure = gaussian(112, 10) + (this.getAge() - 50) / (randomNumberBetween(3, 8))
 
         this.phone = new Phone(this.personKey, this.DOB)
 
@@ -138,6 +138,7 @@ export default class Person {
             this.heartRate += this.heartRate * (randomNumberBetween(0, 1) - 0.5) * 0.01
             this.breathingRate += this.breathingRate * (randomNumberBetween(0, 1) - 0.5) * 0.01
             this.bodyTemp += this.bodyTemp * (randomNumberBetween(0, 1) - 0.5) * 0.01
+            this.bloodPressure += this.bloodPressure * (randomNumberBetween(0, 1) - 0.5) * 0.01
         }
 
         let maxV = 0.5

@@ -85,7 +85,8 @@ export default class Phone {
         this.TRAIN_MILA ++
     }
     PROCESS_VITALS() {
-        this.drive.MILA_param = CLOUD.GET_MILA_PARAM
+        this.drive.MILA_param = CLOUD.GET_MILA_PARAM()
+        //console.log(CLOUD.GET_MILA_PARAM())
         const param = this.drive.MILA_param
         const x = standardise(this.drive.vitals, CLOUD.MILA_MEAN_SD)
 

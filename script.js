@@ -449,13 +449,14 @@ function update(time) {
           setTimeout(() =>cloneBottomOfTerminal('vitals-wrap'),500)
           setTimeout(()=>me.start(),600)
         }
-        // me.phone.PROCESS_VITALS()
-        // console.log(me.phone.drive.conditions)
-        // for (const model in me.phone.drive.conditions) {
-        //   if (me.phone.drive.conditions[model] > 0) {
-        //     console.log('ALERT: ' + model)
-        //   }
-        // }
+        me.phone.PROCESS_VITALS()
+        console.log("CONDITIONS: ")
+        console.log(me.phone.drive.conditions)
+        for (const model in me.phone.drive.conditions) {
+          if (me.phone.drive.conditions[model] > 0) {
+            console.log('ALERT: ' + model)
+          }
+        }
       }
     })
 
