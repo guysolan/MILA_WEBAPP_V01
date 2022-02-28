@@ -113,8 +113,8 @@ export default class Person {
     }
 
     resetPosition() {
-        this.x = 75 + (Math.random() - 0.5) * 40
-        this.y = 50 + (Math.random() - 0.5) * 40
+        this.x = 72 + (Math.random() - 0.5) * 35
+        this.y = 50 + (Math.random() - 0.5) * 45
         this.direction = {
             x: 0
         }
@@ -131,6 +131,7 @@ export default class Person {
         // this.velocity = INITIAL_VELOCITY
         this.velocity = start_V
     }
+    
 
     updatePosition(delta) {
 
@@ -147,43 +148,53 @@ export default class Person {
         let changeX = randomNumberBetween(-changeF, changeF)
         let changeY = randomNumberBetween(-changeF, changeF)
 
-
-        if (this.direction.x > maxV) {
+        
+        if (this.direction.x >= maxV) {
+            this.velocity = start_V
             // console.log('Too quick X')
             changeX = randomNumberBetween(-changeF, 0)
-        } else if (this.direction.x < -maxV) {
+        } else if (this.direction.x <= -maxV) {
+            this.velocity = start_V
             // console.log('Too quick X')
             changeX = randomNumberBetween(0, changeF)
         }
 
-        if (this.direction.y > maxV) {
+        if (this.direction.y >= maxV) {
+            this.velocity = start_V
             // console.log('Too quick Y')
             changeY = randomNumberBetween(0, changeF)
 
-        } else if (this.direction.x < -maxV) {
+        } else if (this.direction.x <= -maxV) {
+            this.velocity = start_V
             // console.log('Too quick Y')
             changeY = randomNumberBetween(-changeF, 0)
         }
 
         let repulsePower = 2
 
-        if (this.x < 55) {
+        let maxX = 85;
+        let minX = 60;
+        let maxY = 70;
+        let minY = 30;
+        let forceField = 5;
+
+        if (this.x < minX) {
             // console.log('too left')
-            let closeLeft = ((this.x - 50) / repulsePower)
+            let closeLeft = ((this.x - (minX-forceField)) / repulsePower)
             changeX = randomNumberBetween(0, changeF) / closeLeft
-        } else if (this.x > 90) {
+        } else if (this.x > maxX) {
             // console.log('too right')
-            let closeRight = ((95 - this.x) / repulsePower)
+            let closeRight = (((maxX+forceField) - this.x) / repulsePower)
             changeX = randomNumberBetween(-changeF, 0) / closeRight
         }
 
-        if (this.y > 80) {
+        if (this.y > minY) {
             // console.log('too low')
-            let closeBottom = ((90 - this.y) / repulsePower)
+            let closeBottom = (((maxY+forceField) - this.y) / repulsePower)
             changeY = randomNumberBetween(0, changeF) / closeBottom
-        } else if (this.y < 20) {
+        } else if (this.y < maxY) {
             // console.log('too high')
-            let closeTop = ((this.y - 10) / repulsePower)
+            let closeTop = ((this.y - (minY-forceField)) / repulsePower)
             changeY = randomNumberBetween(-changeF, 0) / closeTop
         }
 
@@ -192,10 +203,10 @@ export default class Person {
         // -------------------------------------------------------------------------
 
         if (!(this.personElement.classList.contains('video-call'))) {
-            this.takeCall('phone-call', green_spot, 800, 150, false)
+            this.takeCall('phone-call', green_spot, 600, 150, false)
         }
         if (!(this.personElement.classList.contains('phone-call'))) {
-            this.takeCall('video-call', blue_spot, 1100, 300, true)
+            this.takeCall('video-call', blue_spot, 1000, 150, true)
         }
 
         // ------------------------------------------------------------------------

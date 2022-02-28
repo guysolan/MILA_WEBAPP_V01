@@ -78,7 +78,9 @@ export default class Phone {
         const vitals = diagnoses_data[0]   
         const diagnoses = diagnoses_data[1]
 
-        for (let i = 0; i < 5e7; i++) {i**2}
+        for (let i = 0; i < 5e7; i++) {
+            console.log(i**2)
+        }
 
         this.drive.MILA_param = this.drive.MILA_param
         
@@ -188,7 +190,6 @@ export default class Phone {
     }
     showVitals(){
         const BT = maths.twoDP(this.drive.vitals[0])
-        console.log(`Body Temp: ${BT}`)
         const BP = maths.twoDP(this.drive.vitals[1])
         const HR = maths.twoDP(this.drive.vitals[2])
         const RR = maths.twoDP(this.drive.vitals[3])

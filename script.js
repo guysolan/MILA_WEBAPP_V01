@@ -5,17 +5,23 @@ import * as maths from './maths.js'
 import * as diseases from './disease-graph.js'
 import sensorFn from "./sensorFn.js"
 import CLOUD from "./CLOUD.js"
-
-
+import terminal_message from './terminal-messages.js'
+import chart_data from './chart-data.js'
+// import Chart from 'chart.js/auto';
 
 //FROM_RESEARCH_HOW_MUCH_DATA_NEEDED_TO_GET_VITALS
-const dataRequirement = 3e6
+const dataRequirement = 1e6 / 1
 
 //SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//SETUP//
 
 const terminal = document.getElementById('terminal')
 
+const terminalSelector = document.getElementById('terminal-selector');
+const UISelector = document.getElementById('UI-selector');
+
 const risks = document.querySelectorAll('.risk')
+
+const time_buttons = document.querySelectorAll('.time')
 
 const ellipse1 = document.getElementById("ellipse1")
 const ellipse2 = document.getElementById("ellipse2")
@@ -29,9 +35,8 @@ const allCCTV = [CCTV_1, CCTV_2, CCTV_3]
 
 const dateElem = document.getElementById('day')
 
-const sunMoonElem = document.getElementById('sun-and-moon')
-
 const continueBtn = document.getElementById('continue-btn')
+const feedbackBtn = document.getElementById('feedback-btn')
 
 const introWords1 = document.getElementById('intro-words-1')
 const introWords2 = document.getElementById('intro-words-2')
@@ -47,64 +52,92 @@ const vitalsMessage3 = document.getElementById('vitals-message-3')
 const vitalsMessage4 = document.getElementById('vitals-message-4')
 
 const seeDoctorMessage1 = document.getElementById('see-doctor-message-1')
+const seeDoctorMessage2 = document.getElementById('see-doctor-message-2')
 
 const riskMessage1 = document.getElementById('risk-message-1')
 
-const vitalsTerminalMessage1 = `------------------------------<br>
-<span class="blue">Vital</span> Extraction Initiated
-<br>-----------------------------`
-const vitalsTerminalMessage2 = 'Identifying User...'
-const vitalsTerminalMessage3 = 'Extracting Vitals from Biomarkers...'
-const vitalsTerminalMessage4 = 'Logging Vitals to Phone Memory...'
+const doctorFeedback1 = document.getElementById('doctor-feedback-1')
+const doctorFeedback2 = document.getElementById('doctor-feedback-2')
 
-const riskTerminalMessage1 = `------------------------------<br>
-<span class="blue">Risk</span> Calculation Initiated
-<br>-----------------------------`
-const riskTerminalMessage2 = 'Running Machine Learning for new vitals...<br>'
+const localTrainingOverMessage = document.getElementById('training-over-1')
+const globalTrainingStart = document.getElementById('global-training-start')
+const watchGlobalTraining = document.getElementById('watch-global-training')
+const globalBeingTrained = document.getElementById('global-being-trained')
 
-const dashedLines = '<br>-----------------------------<br>'
+const globalTrainingComplete = document.getElementById('global-training-complete')
+const globalModel = document.getElementById('global-model')
 
-const seeDoctorTerminalMessage1 = 'Risk threshold breached - send user notification'
+const trainingProgressBar = document.getElementById('training-progress-bar')
 
-
-const startLearning1 = document.getElementById('start-learning-1')
-const startLearning11 = document.getElementById('start-learning-1.1')
-const startLearning2 = document.getElementById('start-learning-2')
-const startLearning4 = document.getElementById('start-learning-4')
-const startLearning5 = document.getElementById('start-learning-5')
-const startLearning6 = document.getElementById('start-learning-6')
-const dataStoredMessage = document.getElementById('data-stored-message')
 const introMorePeople = document.getElementById('intro-more-people')
-let clock = new Clock(dateElem, sunMoonElem)
+
+const otherGlobalTraining = document.getElementById('other-global-training')
+let anotherGlobalTraining = document.getElementById('another-global-training')
+
+const simulationOver = document.getElementById('simulaton-over')
+const maxBarWidth = 85;
+
+let clock = new Clock(dateElem)
+
+let myChart = new Chart(
+  document.getElementById('myChart').getContext('2d'),
+  chart_data.config
+);
+
 let lastTime
 
 //ADAPATBLE SETUP//ADAPATBLE SETUP//ADAPATBLE SETUP//ADAPATBLE SETUP//ADAPATBLE SETUP//
 let startIntro = 15;
-let startLearning = 1500;
-let startAddingPeople = 7500;
+let doctorFeedbackTime = 500;
+let startAddingPeople = doctorFeedbackTime + 5000;
 
 //INITIALISE//INITIALISE//INITIALISE//INITIALISE//INITIALISE//INITIALISE//INITIALISE//
 const me = new Person(document.getElementById("ball"))
 let people = [me]
+let alreadyTrained = [me]
 
 let pause = false;
 let introCount = 1
 
-// me.phone.showVitals()
-console.log(`PersonKey: ${me.personKey}`)
-console.log(`Female? ${me.female}`)
-console.log(`Age ${me.getAge()} year old`)
-console.log(`HR ${me.heartRate} per minute`)
-console.log(`Temp ${me.bodyTemp} degrees C`)
+messageAfterDelay(terminal_message.dashedLines, 0)
+messageAfterDelay(`PersonKey: ${me.personKey}`, 1)
+messageAfterDelay(`Age: ${me.getAge()} year old`, 2)
+if (me.female) {
+  messageAfterDelay(`Female = <span class="green">${me.female}</span>`, 3)
+} else {
+  messageAfterDelay(`Female = <span class="red">${me.female}</span>`, 3)
+}
+messageAfterDelay(terminal_message.dashedLines, 4)
 
 // Track which messages have popped up
 let videoMessageShown = false;
 let phoneMessageShown = false;
 let CCTVMessageShown = false;
-let showVitalsMessages = false
-let vitalsMessagesCount = 0
 
-let processMessageShown = 0;
+let vitalsMessagesCount = 0
+let showVitalsMessages = false
+
+let doctorMessagesCount = 0
+let showDoctorMessages = false;
+let startTraining = false;
+let trainingProgress = 0;
+let trainingMessagesShown = 0
+let trainGlobal = false;
+
+let globalTrainingCount = 0
+let globalTrainingDuration = 250;
+
+let addMorePeople = false;
+let morePeopleCount = 0
+let morePeopleDelay = 500;
+
+let moreTrainGlobal = false;
+let moreGlobalTrainingCount = 0;
+let moreGlobalTrainingDuration = 50;
+let ballBeingTrained;
+
+let otherGlobalShown = false;
+
 let dataStoredMessageShow = false
 
 // Track Console
@@ -184,15 +217,23 @@ function lightIcon(person, icon_id, sensor_classname) {
   }
 }
 
-function showMessage(message) {
+function showMessage(message, showButton = true) {
   pause = true;
   if (message) {
-    console.log(message)
+    // console.log(message)
   }
   message.classList.remove('hidden')
   message.classList.remove('hidden')
+  if (showButton) {
+    continueBtn.classList.remove('hidden')
+  }
+}
 
-  continueBtn.classList.remove('hidden')
+function showFeedbackMessage(message) {
+  pause = true;
+  message.classList.remove('hidden')
+  message.classList.remove('hidden')
+  feedbackBtn.classList.remove('hidden')
 }
 
 
@@ -200,6 +241,7 @@ function showMessage(message) {
 let allMessages = Array.from(document.querySelector('#all-messages').children);
 
 function unPause() {
+  // console.log('unPause')
   pause = false;
   continueBtn.classList.add('hidden')
   allMessages.forEach((message) => {
@@ -209,7 +251,11 @@ function unPause() {
   })
 }
 
-window.onclick = unPause
+time_buttons.forEach((button) => {
+  button.onclick = unPause;
+})
+
+continueBtn.onclick = unPause
 
 document.body.onkeydown = function (e) {
   if (e.keyCode == 32 || 13 || 39) {
@@ -235,6 +281,44 @@ function moveBottomOfTerminal(element_id) {
   terminal.prepend(element);
 }
 
+function changeGlobalModelSequence() {
+  for (let person of people) {
+    person.stop()
+  }
+  globalModel.classList.add('active')
+  console.log('Start Loop')
+
+  console.log('End Loop')
+
+  globalModel.classList.remove('active')
+  for (let person of people) {
+    person.start()
+  }
+}
+
+function changeGlobalModel(changeAmount) {
+  let chartDataPoints = chart_data.config.data.datasets['0'].data
+  // console.log(chartDataPoints)
+  for (let i = 0; i < chartDataPoints.length; i++) {
+    if (Math.round(maths.randomNumberBetween(1, 5)) == i) {
+      let point = chartDataPoints[i]
+      let newPoint
+      if (point > 30) {
+        newPoint = point + maths.randomNumberBetween(-changeAmount, 0)
+
+      } else if (point < 10) {
+        newPoint = point + maths.randomNumberBetween(0, changeAmount)
+
+      } else {
+        newPoint = point + maths.randomNumberBetween(-changeAmount, changeAmount)
+      }
+      chartDataPoints.splice(i, 1, newPoint)
+      myChart.update()
+
+    }
+  }
+}
+
 function convertToBits(dataType) {
   let dataInMemory = me.phone.space(dataType)
   const prefix = ['bytes', 'Kb', 'Mb', 'Gb']
@@ -250,38 +334,38 @@ function convertToBits(dataType) {
 }
 
 function showMemory(dataType, dataElem, dataName) {
-
   const data = convertToBits(dataType)
   dataElem.innerHTML = `Saving ${dataName} Data = <span class='green'>True</span>
   <br><br>
-  ${dataName} Data Stored: ${data.formatted}
+  ${dataName} Data: ${data.formatted}
   <br><br>
-  <div class='bar-chart' style='width:${data.dataInMemory/dataRequirement*90}%; max-width: 90%'></div>`
+  <div class='bar-chart' style='width:${data.dataInMemory/dataRequirement*maxBarWidth}%; max-width: ${maxBarWidth}%'></div>`
 }
 
 function showRisk(conditionElem, condition, risk, noRisk) {
-  let risk_scaler = 80
-  noRisk -= 0.2
-  let riskPercent = (noRisk-risk)/noRisk*risk_scaler
-  if(risk>0){
-    conditionElem.innerHTML = `<p>${condition}</p>
-    <div class='risk-bar red' style='margin: 0 1rem; width:${riskPercent}%; max-width: 90%'></div>`
-  } else{
-    conditionElem.innerHTML = `<p>${condition}</p>
-  <div class='risk-bar' style='margin: 0 1rem; width:${riskPercent}%; max-width: 90%'></div>`
+  if (risk == NaN || risk < noRisk) {
+    risk = noRisk
   }
-  
+  let riskPercent = (noRisk - risk) / noRisk * maxBarWidth
+  if (risk > 0) {
+    conditionElem.innerHTML = `<p>${condition}</p>
+    <div class='risk-bar red' style='margin: 0 1rem; width:${riskPercent}%; max-width: ${maxBarWidth}%'></div>`
+  } else {
+    conditionElem.innerHTML = `<p>${condition}</p>
+  <div class='risk-bar' style='margin: 0 1rem; width:${riskPercent}%; max-width: ${maxBarWidth}%'></div>`
+  }
+
 }
 
 function showAllRisks() {
   for (let i = 0; i < risks.length; i++) {
     let diseases = Object.keys(me.phone.drive.conditions)
     let disease_risks = Object.values(me.phone.drive.conditions)
-    console.log(`${diseases[i]} risk: ${disease_risks[i]}`)
+    // console.log(`${diseases[i]} risk: ${disease_risks[i]}`)
     showRisk(risks[i], diseases[i], disease_risks[i], CLOUD.NO_RISK)
     cloneBottomOfTerminalByElem(risks[i])
   }
-  messageAfterDelay(dashedLines, 10)
+  messageAfterDelay(terminal_message.dashedLines, 10)
 
 }
 
@@ -291,7 +375,16 @@ function showTotal() {
   totalMemoryElem.innerHTML = `
   Data Requirement: ${maths.twoDP(data.dataInMemory/dataRequirement*100)}% 
   <br><br>
-  <div class='bar-chart total' style='width:${data.dataInMemory/dataRequirement*90}%; max-width: 90%'></div>`
+  <div class='bar-chart total' style='width:${data.dataInMemory/dataRequirement*maxBarWidth}%; max-width: ${maxBarWidth}%'></div>`
+}
+
+function showTrainingProgress(percentComplete) {
+  stopSensors();
+  trainingProgressBar.innerHTML = `
+  Training Complete: ${maths.twoDP(percentComplete)}% 
+  <br><br>
+  <div class='bar-chart training' style='width:${percentComplete/100*maxBarWidth}%; max-width: ${maxBarWidth}%'></div>`
+  terminal.prepend(trainingProgressBar)
 }
 
 function stopStreaming(dataElem, dataName) {
@@ -300,7 +393,7 @@ function stopStreaming(dataElem, dataName) {
   dataElem.appendChild(stoppedStreaming)
 }
 
-function showAction(dataElem, name, call = true) {
+function showAction(name, call = true) {
   let newAction = document.createElement('p')
   if (call) {
     newAction.innerHTML = `<br>
@@ -318,13 +411,37 @@ function showAction(dataElem, name, call = true) {
     <br>
     ---------------------------`
   }
-  dataElem.appendChild(newAction)
+  terminal.prepend(newAction)
 }
 
-function startVitalsSequence() {
-  me.stop()
-  messageAfterDelay('Starting User Identification...', 10)
-  messageAfterDelay('User Identified', 1000)
+function swapTerminalUI() {
+  if (terminalSelector.classList.contains('hidden')) {
+    terminalSelector.classList.remove('hidden')
+    UISelector.classList.add('hidden')
+  } else {
+    terminalSelector.classList.add('hidden')
+    UISelector.classList.remove('hidden')
+  }
+}
+
+
+
+function alterRisk1() {
+  me.phone.drive.conditions['CARDIOVASCULAR'] = -0.7
+  me.phone.drive.conditions['INFECTION'] = -1
+  me.phone.drive.conditions['DERMATOLOGY'] = -0.001
+  me.phone.drive.conditions['RESPIRATORY'] = -1.3
+  me.phone.drive.conditions['METABOLIC'] = -1.5
+  me.phone.drive.conditions['GASTROINTESTINAL'] = -1.9
+}
+
+function alterRisk2() {
+  me.phone.drive.conditions['CARDIOVASCULAR'] = -0.7
+  me.phone.drive.conditions['INFECTION'] = -0.6
+  me.phone.drive.conditions['DERMATOLOGY'] = 0.001
+  me.phone.drive.conditions['RESPIRATORY'] = -1.6
+  me.phone.drive.conditions['METABOLIC'] = -2.2
+  me.phone.drive.conditions['GASTROINTESTINAL'] = -2.1
 }
 
 function messageAfterDelay(words, time) {
@@ -350,12 +467,20 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
   }
 
   if (old_data_class == false && dataClass == true) {
+
+    if (data_className == 'video-call') {
+      showAction('video', call = true)
+    } else if (data_className == 'phone-call') {
+      showAction('phone', call = true)
+    } else if (data_className == 'CCTV') {
+      showAction('CCTV', call = false)
+    }
+
     cloneBottomOfTerminalbyID('total-memory')
 
     for (let i = 0; i < dataType.length; i++) {
       cloneBottomOfTerminalbyID(element_id[i])
     }
-    showAction(memory_type[0], name, call)
 
   } else if (old_data_class == true && dataClass == false) {
     for (let i = 0; i < dataType.length; i++) {
@@ -364,10 +489,6 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
     }
   }
 }
-
-
-
-
 
 //MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//
 function update(time) {
@@ -397,94 +518,191 @@ function update(time) {
     }
 
     // -----------------SENSOR SEQUENCE------------------
+    if (introCount > startIntro + 3) {
+      if (videoMessageShown == false && me.personElement.classList.contains('video-call')) {
+        showMessage(videoCallMessage)
+        videoMessageShown = true
+      }
+      if (phoneMessageShown == false && me.personElement.classList.contains('phone-call')) {
+        showMessage(phoneCallMessage)
+        phoneMessageShown = true
+      }
+      if (CCTVMessageShown == false && me.personElement.classList.contains('CCTV')) {
+        showMessage(CCTVMessage)
+        CCTVMessageShown = true
+      }
+    }
 
-    if (videoMessageShown == false && me.personElement.classList.contains('video-call')) {
-      showMessage(videoCallMessage)
-      videoMessageShown = true
-    }
-    if (phoneMessageShown == false && me.personElement.classList.contains('phone-call')) {
-      showMessage(phoneCallMessage)
-      phoneMessageShown = true
-    }
-    if (CCTVMessageShown == false && me.personElement.classList.contains('CCTV')) {
-      showMessage(CCTVMessage)
-      CCTVMessageShown = true
-    }
 
     // ------------------VITALS SEQUENCE------------------
-    else if (showVitalsMessages == true && vitalsMessagesCount == 0) {
-      stopSensors()
-      showMessage(vitalsMessage1)
-      messageAfterDelay(vitalsTerminalMessage1, 10)
-      vitalsMessagesCount++
-    } else if (showVitalsMessages == true && vitalsMessagesCount == 1) {
-      stopSensors()
-      showMessage(vitalsMessage2)
-      messageAfterDelay(vitalsTerminalMessage2, 10)
 
-      vitalsMessagesCount++
-    } else if (showVitalsMessages == true && vitalsMessagesCount == 2) {
-      stopSensors()
-      showMessage(vitalsMessage3)
-      messageAfterDelay(vitalsTerminalMessage3, 10)
+    if (showVitalsMessages == true) {
+      if (vitalsMessagesCount == 0) {
+        stopSensors()
+        showMessage(vitalsMessage1)
+        messageAfterDelay(terminal_message.vitals1, 10)
+        vitalsMessagesCount++
+      } else if (vitalsMessagesCount == 1) {
+        stopSensors()
+        showMessage(vitalsMessage2)
+        messageAfterDelay(terminal_message.vitals2, 10)
 
-      vitalsMessagesCount++
-    } else if (showVitalsMessages == true && vitalsMessagesCount == 3) {
-      stopSensors()
-      showMessage(vitalsMessage4)
-      messageAfterDelay(vitalsTerminalMessage4, 10)
-      vitalsMessagesCount++
-    } else if (showVitalsMessages == true && vitalsMessagesCount == 4) {
-      stopSensors()
-      cloneBottomOfTerminalbyID('vitals-wrap')
-      vitalsMessagesCount++
-    } else if (showVitalsMessages == true && vitalsMessagesCount == 5) {
-      stopSensors()
+        vitalsMessagesCount++
+      } else if (showVitalsMessages == true && vitalsMessagesCount == 2) {
+        stopSensors()
+        showMessage(vitalsMessage3)
+        messageAfterDelay(terminal_message.vitals3, 10)
 
-      //Change Vitals to demonstrate doctors process
-      me.phone.drive.conditions['DERMATOLOGY'] = -0.001
+        vitalsMessagesCount++
+      } else if (showVitalsMessages == true && vitalsMessagesCount == 3) {
+        stopSensors()
+        showMessage(vitalsMessage4)
+        messageAfterDelay(terminal_message.vitals4, 10)
+        vitalsMessagesCount++
 
-      showMessage(riskMessage1)
-      messageAfterDelay(riskTerminalMessage1, 1)
-      messageAfterDelay(riskTerminalMessage2, 2)
-      setTimeout(()=>showAllRisks(),5)
-      vitalsMessagesCount++
-      me.start()
+      } else if (showVitalsMessages == true && vitalsMessagesCount == 4) {
+        stopSensors()
+        cloneBottomOfTerminalbyID('vitals-wrap')
+        vitalsMessagesCount++
 
-      
+      } else if (showVitalsMessages == true && vitalsMessagesCount == 5) {
+        stopSensors()
 
+        //Change Vitals to demonstrate doctors process
+        alterRisk1();
+
+        showMessage(riskMessage1)
+        messageAfterDelay(terminal_message.risk1, 1)
+        messageAfterDelay(terminal_message.risk2, 2)
+        setTimeout(() => showAllRisks(), 5)
+        vitalsMessagesCount++
+        me.start()
+      }
     }
-
-
-
-
-
 
     // -------------------RISK SEQUENCE-------------------
 
-    // else if (introCount === startLearning && processMessageShown == 0) {
-    //   showMessage(startLearning1)
-    // } else if (introCount == startLearning + 1 && processMessageShown == 1) {
-    //   showMessage(startLearning2)
-    //   me.phone.PROCESS_DATA()
-    //   me.phone.showVitals()
-    //   console.log(me.phone.drive.vitals)
-    // } else if (introCount == startLearning + 2 && processMessageShown == 2) {
-    //   showMessage(startLearning4)
-    // } else if (introCount == startLearning + 3 && processMessageShown == 3) {
-    //   showMessage(startLearning5)
+    if (showDoctorMessages == true) {
+      // Message 6 within data processing loop
+      if (doctorMessagesCount == 0) {
+        stopSensors()
+        swapTerminalUI()
+        showMessage(seeDoctorMessage2, false)
+        me.start()
+        doctorMessagesCount++
+      } else if (doctorMessagesCount == 1) {
+        swapTerminalUI()
+        doctorMessagesCount++
+      } else if (doctorMessagesCount < doctorFeedbackTime) {
+        doctorMessagesCount++
+      } else if (doctorMessagesCount == doctorFeedbackTime) {
+        stopSensors()
+        showMessage(doctorFeedback1)
+        doctorMessagesCount++
+      } else if (doctorMessagesCount == doctorFeedbackTime + 1) {
+        me.personElement.classList.remove('red')
+        stopSensors()
+        showMessage(doctorFeedback2)
+        messageAfterDelay(terminal_message.training1, 0)
+        doctorMessagesCount++
+        startTraining = true
+      }
+    }
+    if (startTraining == true) {
+      stopSensors()
+      if (trainingProgress < 100) {
+        showTrainingProgress(trainingProgress)
+        trainingProgress += maths.randomNumberBetween(0, 1)
+      } else {
+        trainingMessagesShown = 1
+        startTraining = false
+        trainGlobal = true
+      }
+    }
+    if (trainGlobal == true) {
 
-    // } else if (introCount == startLearning + 4 && processMessageShown == 4) {
-    //   showMessage(startLearning6)
-    // }
-    else if (introCount == startAddingPeople) {
-      showMessage(introMorePeople)
+      if (globalTrainingCount == 0) {
+        showMessage(localTrainingOverMessage)
+        messageAfterDelay(terminal_message.localTrainingOver)
+      } else if (globalTrainingCount == 1) {
+        showMessage(globalTrainingStart)
 
-    } else if (introCount === startAddingPeople + 1) {
-      morePeople(18)
+      } else if (globalTrainingCount == 2) {
+        showMessage(watchGlobalTraining)
+        messageAfterDelay(terminal_message.globalTraining1, 10)
+        messageAfterDelay(terminal_message.globalTraining2, 260)
+        messageAfterDelay(terminal_message.globalTraining3, 500)
+
+        // ---------------TRAIN GLOBAL MODEL-----------------
+      } else if (globalTrainingCount < globalTrainingDuration) {
+        // console.log('globalTrainingInProgress')
+        globalModel.classList.add('active')
+        changeGlobalModel(0.4)
+        me.stop()
+
+      } else if (globalTrainingCount == globalTrainingDuration) {
+        globalModel.classList.remove('active')
+        me.start()
+        showMessage(globalTrainingComplete)
+        messageAfterDelay(terminal_message.globalTraining4, 10)
+        trainGlobal = false
+        addMorePeople = true
+      }
+      if (trainGlobal) {
+        globalTrainingCount++
+        stopSensors()
+      }
     }
 
-    diseases.updateGraph()
+    // -------------------MORE PEOPLE SEQUENCE-------------------
+
+    if (addMorePeople) {
+      morePeopleCount++
+      if (morePeopleCount == morePeopleDelay) {
+        showMessage(introMorePeople)
+      } else if (morePeopleCount == morePeopleDelay + 1) {
+        morePeople(20)
+      }
+    }
+
+    // -----------------MORE PEOPLE GLOBAL TRAINING----------------
+
+    if (moreTrainGlobal && addMorePeople) {
+
+      if (moreGlobalTrainingCount == 0) {
+        messageAfterDelay(terminal_message.globalTraining3, 200)
+
+        // ---------------TRAIN GLOBAL MODEL-----------------
+      } else if (moreGlobalTrainingCount < moreGlobalTrainingDuration) {
+        // console.log('globalTrainingInProgress')
+
+        globalModel.classList.add('active')
+        changeGlobalModel(0.4)
+        me.stop()
+
+      } else if (moreGlobalTrainingCount == moreGlobalTrainingDuration) {
+        globalModel.classList.remove('active')
+        me.start()
+        if (otherGlobalShown == 0) {
+          showMessage(otherGlobalTraining)
+        }
+        if (otherGlobalShown > 0 && otherGlobalShown < 3) {
+          showMessage(anotherGlobalTraining)
+        }
+        otherGlobalShown++
+        messageAfterDelay(terminal_message.globalTraining4, 10)
+        moreTrainGlobal = false
+        ballBeingTrained.personElement.classList.remove('red')
+      }
+
+      stopSensors();
+      moreGlobalTrainingCount++;
+    }
+
+    if (otherGlobalShown == 4) {
+      console.log('End Simulation')
+      showFeedbackMessage(simulationOver)
+    }
 
     people.forEach((person) => {
       person.updatePosition(delta)
@@ -506,47 +724,61 @@ function update(time) {
     people.forEach((person) => {
 
       if (person.phone.space('total') > dataRequirement) {
+
         // FIND VITALS
+        let whichBall = person.personElement.id
+        console.log(`Processing ${whichBall}'s Vitals`)
         person.phone.PROCESS_DATA()
         person.phone.showVitals()
         // FIND RISKS
         person.phone.PROCESS_VITALS()
+        console.log(`Processing ${whichBall}'s Risk`)
         console.log("CONDITIONS: ")
-        console.log(me.phone.drive.conditions)
-        for (let model in me.phone.drive.conditions) {
-          if (me.phone.drive.conditions[model] > 0) {
-            console.log('ALERT: ' + model)
+        console.log(person.phone.drive.conditions)
+
+        for (let model in person.phone.drive.conditions) {
+          if (moreTrainGlobal == false) {
+            if (!(alreadyTrained.includes(person))) {
+              if (person.phone.drive.conditions[model] > 0) {
+                console.log('ALERT: ' + model)
+                person.personElement.classList.add('red')
+                ballBeingTrained = person
+                alreadyTrained.push(ballBeingTrained)
+                moreTrainGlobal = true
+                moreGlobalTrainingCount = 0
+              }
+            }
           }
         }
+
         if (person == me && vitalsMessagesCount < 3) {
           showVitalsMessages = true
         } else if (person == me && vitalsMessagesCount >= 3) {
           stopSensors()
           // VITALS SEQUENCE
-          messageAfterDelay(vitalsTerminalMessage1, 0)
-          messageAfterDelay(vitalsTerminalMessage2, 100)
-          messageAfterDelay(vitalsTerminalMessage3, 200)
-          messageAfterDelay(vitalsTerminalMessage4, 300)
+          messageAfterDelay(terminal_message.vitals1, 0)
+          messageAfterDelay(terminal_message.vitals2, 100)
+          messageAfterDelay(terminal_message.vitals3, 200)
+          messageAfterDelay(terminal_message.vitals4, 300)
           setTimeout(() => cloneBottomOfTerminalbyID('vitals-wrap'), 500)
           setTimeout(() => me.start(), 600)
           // RISK SEQUENCE
-          messageAfterDelay(riskTerminalMessage1, 1000)
-          messageAfterDelay(riskTerminalMessage2, 1100)
+          messageAfterDelay(terminal_message.risk1, 1000)
+          messageAfterDelay(terminal_message.risk2, 1100)
 
-          if(vitalsMessagesCount < 10){
-            me.phone.drive.conditions['DERMATOLOGY'] = 0.001
-            stopSensors()
-            showMessage(seeDoctorMessage1)
-            messageAfterDelay(seeDoctorTerminalMessage1, 10)
-            vitalsMessagesCount+=10
+          if (showVitalsMessages == true && vitalsMessagesCount == 6) {
+            alterRisk2();
+            stopSensors();
+            setTimeout(me.personElement.classList.add('red'), 5000)
+            setTimeout(showMessage(seeDoctorMessage1), 10000)
+            messageAfterDelay(terminal_message.seeDoctor1, 10)
+            showDoctorMessages = true
+            vitalsMessagesCount += 1
           }
           setTimeout(() => showAllRisks(), 1500)
         }
-
-
-
-
       }
+
     })
 
     lightIcon(me, 'blue-spot', 'video-call')

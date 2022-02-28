@@ -14,7 +14,7 @@ CLOUD.MILA_MEAN_SD = [[37, 1], //BT
                       [80, 30], //HR
                       [14, 10]] //RR
 
-CLOUD.NO_RISK = -2
+CLOUD.NO_RISK = -1.25
 
 const MILA_PARAM = {CARDIOVASCULAR:   {weight: [ 0,  1,  1,  0,    1, CLOUD.NO_RISK], power: [1, 1, 1, 1]}, //BT, BP, HR, RR, Age, C
                     DERMATOLOGY:      {weight: [ 1,  0,  0,  0,    1, CLOUD.NO_RISK], power: [2, 1, 1, 1]},

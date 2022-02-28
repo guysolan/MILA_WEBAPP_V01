@@ -1,7 +1,6 @@
 export default class Clock{
-    constructor(dateElem, sunMoonElem) {
+    constructor(dateElem) {
         this.dateElem = dateElem;
-        this.sunMoonElem = sunMoonElem;
     }
 
     passTime(){
