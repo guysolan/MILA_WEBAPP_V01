@@ -10,7 +10,6 @@
 
 
 
-    <script src="./script.js" type="module"></script>
     <script src="https://use.fontawesome.com/a95c1a8fd8.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,109 +34,165 @@
                 <h1 class="title">MILA.HEALTH</h1>
                 <!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
                 <div id="all-messages">
-                    <p id='how-much-data' class="">We know that data is private and want the to know how much data are willing to share.<br><br>Please choose the option which gives you the best balance of privacy vs diagnosis accuracy.
+                    <p id='how-much-data' class="">We know that data is private and want the to know how much data are
+                        willing to share.<br><br>Please choose the option which gives you the best balance of privacy vs
+                        diagnosis accuracy.
                         share.</p>
                 </div>
             </div>
             <div class="option-wrap">
                 <div class="option">
-                    <h3>No Limits</h3>
-                    <div class="stats-row">
-                        <div class="stat">
-                            <h2>99%</h2>
-                            <p>Performance</p>
+                    <form action="https://formspree.io/f/mayvjnre" method="POST">
+                        <input class='hidden' type="text" id="No-Limits" name="No-Limits" value="No Limits">
+                        <h3>No Limits</h3>
+                        <div class="stats-row">
+                            <div class="stat">
+                                <h2>99%</h2>
+                                <p>Performance</p>
+                            </div>
+                            <div class="stat">
+                                <h2>1.2 Tb</h2>
+                                <p>Data per Week</p>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <h2>1.2 Tb</h2>
-                            <p>Data per Week</p>
+                        <div class="included-wrap">
+                            <div class="included-row">
+                                <p>CCTV Footage</p>
+                                <!-- <input class="checkbox" type="checkbox" checked id="cctv-box" name="cctv-box" value="1"> -->
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="included-row">
+                                <p>Video Calls</p>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <!-- <input class="checkbox" type="checkbox" checked id="video-call-box" name="video-call" value="1"> -->
+                            </div>
+                            <div class="included-row">
+                                <p>Phone Calls</p>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                <!-- <input class="checkbox" type="checkbox" checked id="phone-call-box" name="phone-box" value="1"> -->
+                            </div>
                         </div>
-                    </div>
-                    <div class="included-wrap">
-                        <div class="included-row">
-                            <p>CCTV Footage</p>
-                            <i class="fa fa-check" aria-hidden="true"></i>
+                        <div id='choose-btn' class="choose continue-btn">
+                            <button class="" type="submit">
+                                <h5>Choose</h5>
+                            </button>
                         </div>
-                        <div class="included-row">
-                            <p>Video Calls</p>
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </div>
-                        <div class="included-row">
-                            <p>Phone Calls</p>
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div id='choose-btn' class="choose continue-btn">
-                        <h5>Choose</h5>
-                    </div>
-                    
+                    </form>
+
                 </div>
                 <div class="option">
-                    <h3>No Limits</h3>
-                    <div class="stats-row">
-                        <div class="stat">
-                            <h2>71%</h2>
-                            <p>Performance</p>
+                    <form action="https://formspree.io/f/mayvjnre" method="POST">
+                        <input class='hidden' type="text" id="custm" name="custom" value="Custom">
+
+                        <h3>Custom</h3>
+                        <div class="stats-row">
+                            <div class="stat">
+                                <h2 id='custom-performance'>71%</h2>
+                                <p>Performance</p>
+                            </div>
+                            <div class="stat">
+                                <h2 id='custom-data'>0.9 Tb</h2>
+                                <p>Data per Week</p>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <h2>0.9 Tb</h2>
-                            <p>Data per Week</p>
+                        <div class="included-wrap">
+                            <div class="included-row">
+                                <p>CCTV Footage</p>
+                                <input onclick="updateValues()" class="checkbox" type="checkbox" checked
+                                    id="cctv-box-custom" name="cctv-box" value="1">
+                            </div>
+                            <div class="included-row">
+                                <p>Video Calls</p>
+                                <input onclick="updateValues()" class="checkbox" type="checkbox"
+                                    id="video-call-box-custom" name="video-call" value="1">
+                            </div>
+                            <div class="included-row">
+                                <p>Phone Calls</p>
+                                <input onclick="updateValues()" class="checkbox" type="checkbox" checked
+                                    id="phone-call-box-custom" name="phone-box" value="1">
+                            </div>
                         </div>
-                    </div>
-                    <div class="included-wrap">
-                        <div class="included-row">
-                            <p>CCTV Footage</p>
-                            <i class="fa fa-check" aria-hidden="true"></i>
+                        <div id='choose-btn' class="choose continue-btn">
+                            <button class="" type="submit">
+                                <h5>Choose</h5>
+                            </button>
                         </div>
-                        <div class="included-row">
-                            <p>Video Calls</p>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </div>
-                        <div class="included-row">
-                            <p>Phone Calls</p>
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div id='choose-btn' class="choose continue-btn">
-                        <h5>Choose</h5>
-                    </div>
+                    </form>
                 </div>
-                       <div class="option">
-                    <h3>No Limits</h3>
-                    <div class="stats-row">
-                        <div class="stat">
-                            <h2>47%</h2>
-                            <p>Performance</p>
+                <div class="option">
+                    <form action="https://formspree.io/f/mayvjnre" method="POST">
+                        <input class='hidden' type="text" id="no-data" name="no-data" value="No Data">
+                        <h3>No Data</h3>
+                        <div class="stats-row">
+                            <div class="stat">
+                                <h2>47%</h2>
+                                <p>Performance</p>
+                            </div>
+                            <div class="stat">
+                                <h2>0.4 Tb</h2>
+                                <p>Data per Week</p>
+                            </div>
                         </div>
-                        <div class="stat">
-                            <h2>0.4 Tb</h2>
-                            <p>Data per Week</p>
+                        <div class="included-wrap">
+                            <div class="included-row">
+                                <p>CCTV Footage</p>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                <!-- <input class="checkbox" type="checkbox" id="cctv-box" name="cctv-box" value="1"> -->
+                            </div>
+                            <div class="included-row">
+                                <p>Video Calls</p>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                <!-- <input class="checkbox" type="checkbox" id="video-call-box" name="video-call" value="1"> -->
+                            </div>
+                            <div class="included-row">
+                                <p>Phone Calls</p>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                <!-- <input class="checkbox" type="checkbox" id="phone-call-box" name="phone-box" value="1"> -->
+                            </div>
                         </div>
-                    </div>
-                    <div class="included-wrap">
-                        <div class="included-row">
-                            <p>CCTV Footage</p>
-                            <i class="fa fa-times" aria-hidden="true"></i>
+                        <div id='choose-btn' class="choose continue-btn">
+                            <button class="" type="submit">
+                                <h5>Choose</h5>
+                            </button>
                         </div>
-                        <div class="included-row">
-                            <p>Video Calls</p>
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </div>
-                        <div class="included-row">
-                            <p>Phone Calls</p>
-                            <i class="fa fa-check" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div id='choose-btn' class="choose continue-btn">
-                        <h5>Choose</h5>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- <script type="text/javascript" src="Chart.js"></script> -->
-<!-- <script type="text/javascript" src="chartjs-plugin-style.js"></script> -->
+<script>
+    function DP(number, places) {
+        return (Math.round(number * 100) / 100).toFixed(places);
+    }
+
+    const cctv = document.getElementById('cctv-box-custom')
+    const video = document.getElementById('video-call-box-custom')
+    const phone = document.getElementById('phone-call-box-custom')
+    const performance = document.getElementById('custom-performance')
+    const data = document.getElementById('custom-data')
+    let performanceValue = 0;
+    let dataValue = 0;
+
+    function updateValues() {
+        let performanceValue = 0;
+        let dataValue = 0;
+        if (cctv.checked) {
+            performanceValue += 28
+            dataValue += 0.4
+        }
+        if (video.checked) {
+            performanceValue += 48
+            dataValue += 0.8
+        }
+        if (phone.checked) {
+            performanceValue += 23
+            dataValue += 0.2
+        }
+        performance.innerHTML = `${DP(performanceValue,0)} %`
+        data.innerHTML = `${DP(dataValue,1)} Tb`
+    }
+</script>
 
 </html>

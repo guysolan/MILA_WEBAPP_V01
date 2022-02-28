@@ -611,6 +611,43 @@ body {
   margin: auto;
 }
 
+.checkbox{
+  height: 3vh;
+  width: 3vh; 
+}
+
+input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+  filter: hue-rotate(50deg) brightness(0.9);
+}
+
+.continue-btn.choose {
+  background-color: var(--foreground-color);
+  border-radius: 1rem;
+  margin-top: 1rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.continue-btn.choose:hover {
+  outline: 2px solid white;
+  box-shadow: 0px 10px 30px rgba(145, 92, 182, .4);
+}
+
+.continue-btn.choose button {
+  height: 100%;
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  background-color:rgba(255, 0, 0, 0);
+  color: white;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+
 @media (max-width:801px) {
   .content {
     display: none;
