@@ -147,6 +147,10 @@
   text-align: center;
 }
 
+.blurb-wrap.feedback{
+  margin: 0 3vw 0 5vw;
+}
+
 .blurb-wrap h1 {
   width: fit-content;
   font-size: 1.75rem;
@@ -659,18 +663,19 @@ body {
 .option-wrap {
   display: flex;
   color: white;
-  margin-right: 2rem;
+  margin-right: 1rem;
 }
 
 .option {
-  padding: 1rem 1rem;
+  padding: 1.25rem 0.75rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
-  margin: 0 1rem;
+  margin: 0 0.75rem;
 }
 
 .option h3 {
   text-align: center;
+  margin: 0.5rem;
 }
 
 .stats-row {
@@ -679,9 +684,20 @@ body {
 }
 
 .stat {
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
   align-items: center;
   text-align: center;
+}
+
+.stat.left{
+  padding-right: 0.5rem;
+}
+.stat.right{
+  padding-left: 0.5rem;
+}
+
+.stat p{
+  font-size: 0.85rem;
 }
 
 .included-row {

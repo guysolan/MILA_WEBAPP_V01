@@ -30,7 +30,7 @@
 
         <img class="background" src="./images/background.png" alt="Background">
         <div class="feedback-wrap">
-            <div class="blurb-wrap">
+            <div class="blurb-wrap feedback">
                 <h1 class="title">MILA.HEALTH</h1>
                 <!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
                 <div id="all-messages">
@@ -45,11 +45,11 @@
                         <input class='hidden' type="text" id="No-Limits" name="No-Limits" value="No Limits">
                         <h3>No Limits</h3>
                         <div class="stats-row">
-                            <div class="stat">
+                            <div class="stat left">
                                 <h2>99%</h2>
                                 <p>Performance</p>
                             </div>
-                            <div class="stat">
+                            <div class="stat right">
                                 <h2>1.4 Tb</h2>
                                 <p>Data per Week</p>
                             </div>
@@ -72,7 +72,7 @@
                     </form>
 
                 </div>
-                <div class="option">
+                <!-- <div class="option">
                     <form action="https://formspree.io/f/mayvjnre" method="POST">
                         <input class='hidden' type="text" id="custm" name="custom" value="Custom">
 
@@ -105,17 +105,79 @@
                             </button>
                         </div>
                     </form>
+                </div> -->
+                <div class="option">
+                    <form action="https://formspree.io/f/mayvjnre" method="POST">
+                        <input class='hidden' type="text" id="public" name="public" value="No Data">
+                        <h3>Public</h3>
+                        <div class="stats-row">
+                            <div class="stat left">
+                                <h2>58%</h2>
+                                <p>Performance</p>
+                            </div>
+                            <div class="stat right">
+                                <h2>0.8 Tb</h2>
+                                <p>Data per Week</p>
+                            </div>
+                        </div>
+                        <div class="included-wrap">
+                            <div class="included-row">
+                                <p>Public Data</p>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="included-row">
+                                <p>Personal Data</p>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div id='choose-btn' class="choose continue-btn">
+                            <button class="" type="submit">
+                                <h5>Choose</h5>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="option">
+                    <form action="https://formspree.io/f/mayvjnre" method="POST">
+                        <input class='hidden' type="text" id="personal" name="personal" value="No Data">
+                        <h3>Personal</h3>
+                        <div class="stats-row">
+                            <div class="stat left">
+                                <h2>41%</h2>
+                                <p>Performance</p>
+                            </div>
+                            <div class="stat right">
+                                <h2>0.6 Tb</h2>
+                                <p>Data per Week</p>
+                            </div>
+                        </div>
+                        <div class="included-wrap">
+                            <div class="included-row">
+                                <p>Public Data</p>
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                            <div class="included-row">
+                                <p>Personal Data</p>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div id='choose-btn' class="choose continue-btn">
+                            <button class="" type="submit">
+                                <h5>Choose</h5>
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="option">
                     <form action="https://formspree.io/f/mayvjnre" method="POST">
                         <input class='hidden' type="text" id="no-data" name="no-data" value="No Data">
                         <h3>No Data</h3>
                         <div class="stats-row">
-                            <div class="stat">
+                            <div class="stat left">
                                 <h2>0%</h2>
                                 <p>Performance</p>
                             </div>
-                            <div class="stat">
+                            <div class="stat right">
                                 <h2>0.0 Tb</h2>
                                 <p>Data per Week</p>
                             </div>
