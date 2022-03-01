@@ -387,9 +387,9 @@ function showTrainingProgress(percentComplete) {
   terminal.prepend(trainingProgressBar)
 }
 
-function stopStreaming(dataElem, dataName) {
+function stopStreaming(dataElem, name) {
   let stoppedStreaming = document.createElement('p')
-  stoppedStreaming.innerHTML = `Saving ${dataName} Data = <span class='red'>False</span>`
+  stoppedStreaming.innerHTML = `${name} recording finished.`
   dataElem.appendChild(stoppedStreaming)
 }
 
@@ -484,7 +484,7 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
 
   } else if (old_data_class == true && dataClass == false) {
     for (let i = 0; i < dataType.length; i++) {
-      stopStreaming(memory_type[i], dataName[i])
+      stopStreaming(memory_type[i], name)
 
     }
   }
@@ -665,6 +665,13 @@ function update(time) {
       }
     }
 
+    // -----------------END SIMULATION MOVED FORWARD FOR BETTER FLOW----------------
+    
+    if (otherGlobalShown == 4) {
+      console.log('End Simulation')
+      showFeedbackMessage(simulationOver)
+    }
+
     // -----------------MORE PEOPLE GLOBAL TRAINING----------------
 
     if (moreTrainGlobal && addMorePeople) {
@@ -699,10 +706,7 @@ function update(time) {
       moreGlobalTrainingCount++;
     }
 
-    if (otherGlobalShown == 4) {
-      console.log('End Simulation')
-      showFeedbackMessage(simulationOver)
-    }
+
 
     people.forEach((person) => {
       person.updatePosition(delta)
@@ -732,6 +736,11 @@ function update(time) {
         person.phone.showVitals()
         // FIND RISKS
         person.phone.PROCESS_VITALS()
+
+        if(person==me){
+          console.log('ME')
+          alterRisk1();
+        }
         console.log(`Processing ${whichBall}'s Risk`)
         console.log("CONDITIONS: ")
         console.log(person.phone.drive.conditions)
