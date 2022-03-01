@@ -790,10 +790,35 @@ function update(time) {
     })
 
     lightIcon(me, ['public', 'public-video'], 'CCTV')
-    lightIcon(me, ['personal', 'personal-audio'], 'phone-call')
-    lightIcon(me, ['personal', 'personal-audio','personal-video'], 'video-call')
+    // lightIcon(me, ['personal', 'personal-audio'], 'phone-call')
+    // lightIcon(me, ['personal', 'personal-audio', 'personal-video'], 'video-call')
+
+    const personal = document.getElementById('personal')
+    const personalAudio = document.getElementById('personal-audio')
+    const personalVideo = document.getElementById('personal-video')
+    // const public = document.getElementById('public')
+    // const publicVideo = document.getElementById('public-audio')
+    // const publicAudio = document.getElementById('public-video')
 
 
+
+
+    if (me.personElement.classList.contains('phone-call')) {
+      let icons = [personal, personalAudio]
+      icons.forEach((icon) => {
+        icon.classList.add('active')
+      })
+    } else if (me.personElement.classList.contains('video-call')) {
+      let icons = [personal, personalAudio, personalVideo]
+      icons.forEach((icon) => {
+        icon.classList.add('active')
+      })
+    } else {
+      let icons = [personal, personalAudio, personalVideo]
+      icons.forEach((icon) => {
+        icon.classList.remove('active')
+      })
+    }
 
   }
 

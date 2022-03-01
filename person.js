@@ -113,8 +113,8 @@ export default class Person {
     }
 
     resetPosition() {
-        this.x = 72 + (Math.random() - 0.5) * 35
-        this.y = 50 + (Math.random() - 0.5) * 45
+        this.x = 75 + (Math.random() - 0.5) * 30
+        this.y = 50 + (Math.random() - 0.5) * 40
         this.direction = {
             x: 0
         }

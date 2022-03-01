@@ -14,8 +14,9 @@
   --coding-yellow: #f2f91c;
   --global-size: 10vh;
   --global-size-grown: 30vh;
-  --video-color: #FBD38D;
-  --audio-color: #90CDF4;
+  --video-color: #f09a38;
+  --audio-color: #2b80ff;
+  --me-color: rgb(240, 240, 240);
 }
 
 .green {
@@ -466,7 +467,7 @@ body {
   margin: auto;
   position: absolute;
   top: 15vh;
-  right: 51vh;
+  left: 55vw;
   align-items: center;
   justify-content: center;
 }
@@ -487,7 +488,8 @@ body {
 }
 
 #ball {
-  background-color: var(--coding-yellow);
+  /* background-color: var(--coding-yellow); */
+  background-color: var(--me-color);
   opacity: 1;
   z-index: 40;
 }
@@ -521,16 +523,16 @@ body {
 
 
 .ball.video-call,.ball.phone-call.CCTV {
-  box-shadow: 0 0 0 2px var(--audio-color), 0 0 0 4px var(--video-color);
+  box-shadow: 0 0 0 3px var(--audio-color), 0 0 0 6px var(--video-color);
 
 }
 
 .ball.phone-call{
-  box-shadow: 0 0 0 2px var(--audio-color);
+  box-shadow: 0 0 0 3px var(--audio-color);
 }
 
 .ball.CCTV{
-  box-shadow: 0 0 0 2px var(--video-color);
+  box-shadow: 0 0 0 3px var(--video-color);
 }
 
 .spot {
