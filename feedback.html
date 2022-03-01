@@ -34,7 +34,7 @@
                 <h1 class="title">MILA.HEALTH</h1>
                 <!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
                 <div id="all-messages">
-                    <p id='how-much-data' class="">We know that data is private and want the to know how much you are
+                    <p id='how-much-data' class="">We know that data is private and want the to know how much data are
                         willing to share.<br><br>Please choose the option which gives you the best balance of privacy vs
                         diagnosis accuracy.</p>
                 </div>
@@ -56,19 +56,12 @@
                         </div>
                         <div class="included-wrap">
                             <div class="included-row">
-                                <p>CCTV Footage</p>
-                                <!-- <input class="checkbox" type="checkbox" checked id="cctv-box" name="cctv-box" value="1"> -->
+                                <p>Public Data</p>
                                 <i class="fa fa-check" aria-hidden="true"></i>
                             </div>
                             <div class="included-row">
-                                <p>Video Calls</p>
+                                <p>Personal Data</p>
                                 <i class="fa fa-check" aria-hidden="true"></i>
-                                <!-- <input class="checkbox" type="checkbox" checked id="video-call-box" name="video-call" value="1"> -->
-                            </div>
-                            <div class="included-row">
-                                <p>Phone Calls</p>
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                                <!-- <input class="checkbox" type="checkbox" checked id="phone-call-box" name="phone-box" value="1"> -->
                             </div>
                         </div>
                         <div id='choose-btn' class="choose continue-btn">
@@ -83,32 +76,27 @@
                     <form action="https://formspree.io/f/mayvjnre" method="POST">
                         <input class='hidden' type="text" id="custm" name="custom" value="Custom">
 
-                        <h3>Custom</h3>
+                        <h3>You Choose</h3>
                         <div class="stats-row">
                             <div class="stat">
-                                <h2 id='custom-performance'>71%</h2>
+                                <h2 id='custom-performance'>41%</h2>
                                 <p>Performance</p>
                             </div>
                             <div class="stat">
-                                <h2 id='custom-data'>0.9 Tb</h2>
+                                <h2 id='custom-data'>0.6 Tb</h2>
                                 <p>Data per Week</p>
                             </div>
                         </div>
                         <div class="included-wrap">
                             <div class="included-row">
-                                <p>CCTV Footage</p>
+                                <p>Public Data</p>
                                 <input onclick="updateValues()" class="checkbox" type="checkbox" checked
-                                    id="cctv-box-custom" name="cctv-box" value="1">
+                                    id="public-box-custom" name="public-box" value="1">
                             </div>
                             <div class="included-row">
-                                <p>Video Calls</p>
+                                <p>Personal Data</p>
                                 <input onclick="updateValues()" class="checkbox" type="checkbox"
-                                    id="video-call-box-custom" name="video-call" value="1">
-                            </div>
-                            <div class="included-row">
-                                <p>Phone Calls</p>
-                                <input onclick="updateValues()" class="checkbox" type="checkbox" checked
-                                    id="phone-call-box-custom" name="phone-box" value="1">
+                                    id="personal-box-custom" name="personal" value="1">
                             </div>
                         </div>
                         <div id='choose-btn' class="choose continue-btn">
@@ -134,19 +122,12 @@
                         </div>
                         <div class="included-wrap">
                             <div class="included-row">
-                                <p>CCTV Footage</p>
+                                <p>Public Data</p>
                                 <i class="fa fa-times" aria-hidden="true"></i>
-                                <!-- <input class="checkbox" type="checkbox" id="cctv-box" name="cctv-box" value="1"> -->
                             </div>
                             <div class="included-row">
-                                <p>Video Calls</p>
+                                <p>Personal Data</p>
                                 <i class="fa fa-times" aria-hidden="true"></i>
-                                <!-- <input class="checkbox" type="checkbox" id="video-call-box" name="video-call" value="1"> -->
-                            </div>
-                            <div class="included-row">
-                                <p>Phone Calls</p>
-                                <i class="fa fa-times" aria-hidden="true"></i>
-                                <!-- <input class="checkbox" type="checkbox" id="phone-call-box" name="phone-box" value="1"> -->
                             </div>
                         </div>
                         <div id='choose-btn' class="choose continue-btn">
@@ -166,9 +147,8 @@
         return (Math.round(number * 100) / 100).toFixed(places);
     }
 
-    const cctv = document.getElementById('cctv-box-custom')
-    const video = document.getElementById('video-call-box-custom')
-    const phone = document.getElementById('phone-call-box-custom')
+    const public = document.getElementById('public-box-custom')
+    const personal = document.getElementById('personal-box-custom')
     const performance = document.getElementById('custom-performance')
     const data = document.getElementById('custom-data')
     let performanceValue = 0;
@@ -177,18 +157,15 @@
     function updateValues() {
         let performanceValue = 0;
         let dataValue = 0;
-        if (cctv.checked) {
-            performanceValue += 28
-            dataValue += 0.4
+        if (public.checked) {
+            performanceValue += 41
+            dataValue += 0.6
         }
-        if (video.checked) {
-            performanceValue += 48
+        if (personal.checked) {
+            performanceValue += 58
             dataValue += 0.8
         }
-        if (phone.checked) {
-            performanceValue += 23
-            dataValue += 0.2
-        }
+      
         performance.innerHTML = `${DP(performanceValue,0)} %`
         data.innerHTML = `${DP(dataValue,1)} Tb`
     }

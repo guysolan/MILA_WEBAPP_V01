@@ -666,7 +666,7 @@ function update(time) {
 
     // -----------------END SIMULATION MOVED FORWARD FOR BETTER FLOW----------------
 
-    if (otherGlobalShown == 4) {
+    if (otherGlobalShown == 3) {
       console.log('End Simulation')
       showFeedbackMessage(simulationOver)
     }
