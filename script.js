@@ -209,15 +209,20 @@ function stopSensors() {
 
 //DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//
 function lightIcon(person, icon_ids, sensor_classname) {
-  icon_ids.forEach((id) => {
-    const icon = document.getElementById(id)
-    if (person.personElement.classList.contains(sensor_classname)) {
-      icon.classList.add('active')
-    } else {
-      icon.classList.remove('active')
-    }
-  })
 
+
+  if (person.personElement.classList.contains(sensor_classname)) {
+    icon_ids.forEach((id) => {
+      const icon = document.getElementById(id)
+      icon.classList.add('active')
+    })
+  } else {
+    icon_ids.forEach((id) => {
+      const icon = document.getElementById(id)
+      icon.classList.remove('active')
+    })
+
+  }
 }
 
 function showMessage(message, showButton = true) {
@@ -784,9 +789,9 @@ function update(time) {
 
     })
 
-    lightIcon(me, ['personal', 'personal-video', 'personal-audio'], 'video-call')
     lightIcon(me, ['public', 'public-video'], 'CCTV')
     lightIcon(me, ['personal', 'personal-audio'], 'phone-call')
+    lightIcon(me, ['personal', 'personal-audio','personal-video'], 'video-call')
 
 
 

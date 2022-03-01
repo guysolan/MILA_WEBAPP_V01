@@ -475,7 +475,7 @@ body {
 
 
 
-#private.active,#private-audio.active,#private-video.active,
+#personal.active,#personal-audio.active,#personal-video.active,
 #public.active,#public-audio.active,#public-video.active{
   opacity: 1;
 }
@@ -514,20 +514,13 @@ body {
 }
 
 
-.ball.video-call {
+.ball.video-call,.ball.phone-call.CCTV {
   box-shadow: 0 0 0 2px var(--audio-color), 0 0 0 4px var(--video-color);
 
 }
 
 .ball.phone-call{
   box-shadow: 0 0 0 2px var(--audio-color);
-
-
-}
-
-.ball.phone-call.CCTV {
-  box-shadow: 0 0 0 2px var(--audio-color), 0 0 0 4px var(--video-color);
-
 }
 
 .ball.CCTV{

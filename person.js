@@ -172,10 +172,10 @@ export default class Person {
 
         let repulsePower = 2
 
-        let maxX = 80;
-        let minX = 65;
-        let maxY = 65;
-        let minY = 35;
+        let maxX = 85;
+        let minX = 60;
+        let maxY = 70;
+        let minY = 30;
         let forceField = 5;
 
         if (this.x < (minX)) {
