@@ -208,13 +208,16 @@ function stopSensors() {
 }
 
 //DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//DISPLAY FUNCTIONS//
-function lightIcon(person, icon_id, sensor_classname) {
-  const spot = document.getElementById(icon_id)
-  if (person.personElement.classList.contains(sensor_classname)) {
-    spot.classList.add('active')
-  } else {
-    spot.classList.remove('active')
-  }
+function lightIcon(person, icon_ids, sensor_classname) {
+  icon_ids.forEach((id) => {
+    const icon = document.getElementById(id)
+    if (person.personElement.classList.contains(sensor_classname)) {
+      icon.classList.add('active')
+    } else {
+      icon.classList.remove('active')
+    }
+  })
+
 }
 
 function showMessage(message, showButton = true) {
@@ -389,28 +392,19 @@ function showTrainingProgress(percentComplete) {
 
 function stopStreaming(dataElem, name) {
   let stoppedStreaming = document.createElement('p')
-  stoppedStreaming.innerHTML = `${name} recording finished.`
+  stoppedStreaming.innerHTML = `${name} recording <span class='red'>over</span>.`
   dataElem.appendChild(stoppedStreaming)
 }
 
-function showAction(name, call = true) {
+function showAction(name) {
   let newAction = document.createElement('p')
-  if (call) {
-    newAction.innerHTML = `<br>
+  newAction.innerHTML = `<br>
     ---------------------------
     <br>
-    | New ${name} call detected |
+    Detected by ${name} device
     <br>
     ---------------------------
     `
-  } else if (call == false) {
-    newAction.innerHTML = `<br>
-    ---------------------------
-    <br>
-    | Detected in ${name} area |
-    <br>
-    ---------------------------`
-  }
   terminal.prepend(newAction)
 }
 
@@ -455,7 +449,7 @@ function messageAfterDelay(words, time) {
   }, time);
 }
 
-function showData(data_className = 'video-call', memory_type, dataType = 'video', dataName = 'Video', element_id = 'video-memory', old_data_class, name, call = true) {
+function showData(data_className = 'video-call', memory_type, dataType = 'video', dataName = 'Video', element_id = 'video-memory', old_data_class, name) {
 
   let dataClass = me.personElement.classList.contains(data_className)
 
@@ -469,11 +463,11 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
   if (old_data_class == false && dataClass == true) {
 
     if (data_className == 'video-call') {
-      showAction('video', call = true)
+      showAction('Personal')
     } else if (data_className == 'phone-call') {
-      showAction('phone', call = true)
+      showAction('Personal')
     } else if (data_className == 'CCTV') {
-      showAction('CCTV', call = false)
+      showAction('Public')
     }
 
     cloneBottomOfTerminalbyID('total-memory')
@@ -666,7 +660,7 @@ function update(time) {
     }
 
     // -----------------END SIMULATION MOVED FORWARD FOR BETTER FLOW----------------
-    
+
     if (otherGlobalShown == 4) {
       console.log('End Simulation')
       showFeedbackMessage(simulationOver)
@@ -712,13 +706,13 @@ function update(time) {
       person.updatePosition(delta)
     })
 
-    showData('video-call', [video_memory, audio_memory], ['video', 'audio'], ['Video', 'Audio'], ['video-memory', 'audio-memory'], old_video_call_class, 'video', true)
+    showData('video-call', [video_memory, audio_memory], ['video', 'audio'], ['Video', 'Audio'], ['video-memory', 'audio-memory'], old_video_call_class, 'Personal', true)
     old_video_call_class = me.personElement.classList.contains('video-call')
 
-    showData('phone-call', [audio_memory], ['audio'], ['Audio'], ['audio-memory'], old_phone_call_class, 'phone', true)
+    showData('phone-call', [audio_memory], ['audio'], ['Audio'], ['audio-memory'], old_phone_call_class, 'Personal', true)
     old_phone_call_class = me.personElement.classList.contains('phone-call')
 
-    showData('CCTV', [video_memory], ['video'], ['Video'], ['video-memory'], old_CCTV_class, 'CCTV', false)
+    showData('CCTV', [video_memory], ['video'], ['Video'], ['video-memory'], old_CCTV_class, 'Public', false)
     old_CCTV_class = me.personElement.classList.contains('CCTV')
 
     onVideoCall(people)
@@ -737,7 +731,7 @@ function update(time) {
         // FIND RISKS
         person.phone.PROCESS_VITALS()
 
-        if(person==me){
+        if (person == me) {
           console.log('ME')
           alterRisk1();
         }
@@ -790,9 +784,9 @@ function update(time) {
 
     })
 
-    lightIcon(me, 'blue-spot', 'video-call')
-    lightIcon(me, 'red-spot', 'CCTV')
-    lightIcon(me, 'green-spot', 'phone-call')
+    lightIcon(me, ['personal', 'personal-video', 'personal-audio'], 'video-call')
+    lightIcon(me, ['public', 'public-video'], 'CCTV')
+    lightIcon(me, ['personal', 'personal-audio'], 'phone-call')
 
 
 

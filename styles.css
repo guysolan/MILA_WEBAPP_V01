@@ -14,6 +14,8 @@
   --coding-yellow: #f2f91c;
   --global-size: 10vh;
   --global-size-grown: 30vh;
+  --video-color: #FBD38D;
+  --audio-color: #90CDF4;
 }
 
 .green {
@@ -230,7 +232,7 @@ body {
   text-align: center;
   border-radius: 2rem;
   z-index: -2;
-  width: 36vh;
+  max-width: 100%;
 }
 .image {
   width: 250px;
@@ -240,6 +242,7 @@ body {
 
 .image-contain {
   object-fit: contain;
+  max-width: 90%;
   object-position: center;
 }
 
@@ -329,8 +332,6 @@ body {
 }
 
 .time:hover {
-  /* background-color: rgba(255, 255, 255, 0.2); */
-  /* box-shadow: 0px 5px 10px rgba(145, 92, 182, 0.4); */
   cursor: pointer;
   background-color: #aae1ff;
   color: #ebf8ff;
@@ -394,7 +395,7 @@ body {
   height: 80vh;
   border-radius: 2rem;
   background-color: var(--foreground-color);
-  right: 5vw;
+  right: 10vh;
   top: 10vh;
 }
 
@@ -404,6 +405,7 @@ body {
   border-radius: 1rem;
   margin-top: 1rem;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .continue-btn:hover {
@@ -416,6 +418,7 @@ body {
   color: white;
   font-size: 1.125rem;
   margin: auto;
+  text-decoration: none;
 }
 
 /* How many seconds per day for each sensor */
@@ -454,6 +457,29 @@ body {
   opacity: 0.2;
 }
 
+.symbols{
+  display: flex;
+  margin: auto;
+  position: absolute;
+  top: 15vh;
+  right: 51vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.symbols img{
+  margin-right: 2.5vh;
+  opacity: 0.2;
+  transform: scale(1.35)
+}
+
+
+
+#private.active,#private-audio.active,#private-video.active,
+#public.active,#public-audio.active,#public-video.active{
+  opacity: 1;
+}
+
 #ball {
   background-color: var(--coding-yellow);
   opacity: 1;
@@ -487,12 +513,25 @@ body {
   display: none;
 }
 
+
 .ball.video-call {
-  outline: 3px solid blue;
+  box-shadow: 0 0 0 2px var(--audio-color), 0 0 0 4px var(--video-color);
+
 }
 
-.ball.phone-call {
-  outline: 3px solid rgb(0, 255, 0);
+.ball.phone-call{
+  box-shadow: 0 0 0 2px var(--audio-color);
+
+
+}
+
+.ball.phone-call.CCTV {
+  box-shadow: 0 0 0 2px var(--audio-color), 0 0 0 4px var(--video-color);
+
+}
+
+.ball.CCTV{
+  box-shadow: 0 0 0 2px var(--video-color);
 }
 
 .spot {
@@ -507,7 +546,7 @@ body {
   top: 17vh;
   height: 5vh;
 }
-
+/* 
 .red-spot {
   color: red;
   right: 77vh;
@@ -525,7 +564,7 @@ body {
 
 .spot.active {
   opacity: 1;
-}
+} */
 
 .memory-wrap {
   margin: 1rem 0;
