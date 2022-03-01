@@ -1,307 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="styles.css">
+    <script src="./script.js" type="module"></script>
+    <script src="https://use.fontawesome.com/a95c1a8fd8.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>mila.health</title>
+  </head>
 
+  <body>
+    <div class="blocker">
+      <h1 class="phone-title">MILA.HEALTH</h1>
+      <p>To experience MILA.HEALTH, please use a larger screen.</p>
+    </div>
+    <div class="content">
+      <img class="background" src="./images/background.png" alt="Background" />
+      <div class="clock">
+        <div class="day-wrap">
+          <h4>Day&nbsp;</h4>
+          <h4 id="day">01</h4>
+        </div>
+      </div>
+      <div id="global-model">
+        <div class="global-curve">
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+      <div class="phone-and-blurb">
+        <div class="blurb-wrap">
+          <h1 class="title">MILA.HEALTH</h1>
+          <!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
+          <div id="all-messages">
+            <!--------------------------------------------------------------------->
+            <!----------------------- INTRO MESSAGE SECQUENE  --------------------->
+            <!--------------------------------------------------------------------->
 
+            <p id="intro-words-1" class="hidden">
+              In 2041, big tech giants are trading healthcare diagnosis for
+              data.
+            </p>
+            <p id="intro-words-2" class="hidden">
+              MILA.HEALTH allows patients to contribute to the nation’s
+              healthcare, without their data ever leaving their phone.
+            </p>
+            <p id="intro-words-3" class="hidden">
+              By checking your vitals daily, many diseases can be detected
+              before you even become sympomatic.
+            </p>
 
+            <!--------------------------------------------------------------------->
+            <!--------------------- SENSOR TRIGGERERD MESSAGES -------------------->
+            <!--------------------------------------------------------------------->
 
-	<script src="./script.js" type="module"></script>
-	<script src="https://use.fontawesome.com/a95c1a8fd8.js"></script>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Roboto:wght@100;300;400;500;700;900&display=swap"
-		rel="stylesheet">
-	<title>mila.health</title>
-</head>
+            <p id="video-call-message" class="hidden">
+              You just started video calling.<br /><br />Watch as your video and
+              audio data gets saved to your phone.
+            </p>
+            <p id="phone-call-message" class="hidden">
+              You just answered your phone.<br /><br />Watch as your audio data
+              gets saved to your phone.
+            </p>
+            <p id="CCTV-message" class="hidden">
+              You just entered a CCTV area.<br /><br />Watch as your video data
+              gets saved to your phone.
+            </p>
 
-<body>
-	<div class="blocker">
-		<h1 class="phone-title">MILA.HEALTH</h1>
-		<p>To experience MILA.HEALTH, please use a larger screen.</p>
-	</div>
-	<div class="content">
+            <!--------------------------------------------------------------------->
+            <!----------------- VITAL GATHERING MESSAGE SEQUENCE ------------------>
+            <!--------------------------------------------------------------------->
 
-		<img class="background" src="./images/background.png" alt="Background">
-		<div class="clock">
-			<div class="day-wrap">
-				<h4>Day&nbsp;</h4>
-				<h4 id="day">01</h4>
-			</div>
-		</div>
-		<div id="global-model">
-			<div class='global-curve'>
-				<canvas id="myChart"></canvas>
-			</div>
-		</div>
-		<div class="phone-and-blurb">
-			<div class="blurb-wrap">
-				<h1 class="title">MILA.HEALTH</h1>
-				<!-- <p>This is a pop up to either ask a question or guide the user as to what is going on.</p> -->
-				<div id="all-messages">
+            <p id="vitals-message-1" class="hidden">
+              Enough data has been gathered to meet the requirement to find your
+              vitals.
+            </p>
+            <p id="vitals-message-2" class="hidden">
+              First, our Machine Learning algorithm identifies you from the
+              video footage.
+            </p>
+            <p id="vitals-message-3" class="hidden">
+              Next, your vitals concealed within biomarkers in your appearance,
+              are extracted.
+            </p>
+            <p id="vitals-message-4" class="hidden">
+              The vitals are then logged in your medical records which only you
+              can access.
+            </p>
 
-					<!--------------------------------------------------------------------->
-					<!----------------------- INTRO MESSAGE SECQUENE  --------------------->
-					<!--------------------------------------------------------------------->
+            <!--------------------------------------------------------------------->
+            <!----------------- VITAL GATHERING MESSAGE SEQUENCE ------------------>
+            <!--------------------------------------------------------------------->
 
-					<p id='intro-words-1' class="hidden">In 2041, big tech giants are trading healthcare diagnosis for
-						data.
-					</p>
-					<p id='intro-words-2' class="hidden">MILA.HEALTH allows patients to contribute to the nation’s
-						healthcare, without their data ever leaving their phone.</p>
-					<p id='intro-words-3' class="hidden">By checking your vitals daily, many diseases can be detected
-						before
-						you even become sympomatic.</p>
+            <p id="risk-message-1" class="hidden">
+              From your new vitals, your risk of different diseases is
+              calculated.
+            </p>
 
-					<!--------------------------------------------------------------------->
-					<!--------------------- SENSOR TRIGGERERD MESSAGES -------------------->
-					<!--------------------------------------------------------------------->
+            <p id="see-doctor-message-1" class="hidden">
+              One of your vitals has breached the risk threshold! You will
+              recieve a notification from the app.
+            </p>
+            <p id="see-doctor-message-2" class="hidden">
+              Your risk of dermatological disease is high.<br /><br />Please
+              select a time to see a doctor.
+            </p>
 
-					<p id='video-call-message' class="hidden">You just started video calling.<br><br>Watch as your video
-						and
-						audio data gets saved to your phone.</p>
-					<p id='phone-call-message' class="hidden">You just answered your phone.<br><br>Watch as your
-						audio data gets saved to your phone.</p>
-					<p id='CCTV-message' class="hidden">You just entered a CCTV area.<br><br>Watch as your
-						video data gets saved to your phone.</p>
+            <!--------------------------------------------------------------------->
+            <!----------------- TRAIN GLOBAL MODEL ------------------>
+            <!--------------------------------------------------------------------->
 
-					<!--------------------------------------------------------------------->
-					<!----------------- VITAL GATHERING MESSAGE SEQUENCE ------------------>
-					<!--------------------------------------------------------------------->
+            <p id="doctor-feedback-1" class="hidden">
+              Following your trip to your doctor, your results have been logged
+              in the NHS database.
+            </p>
+            <p id="doctor-feedback-2" class="hidden">
+              MILA.HEALTH will now learn from your updated medical records.
+            </p>
+            <p id="training-over-1" class="hidden">
+              Your local machine learning model has been sucessfully trained.<br /><br />Your
+              diagnosis accuracy has been improved.
+            </p>
+            <p id="global-training-start" class="hidden">
+              The parameters from training your local model can now be fed back
+              to the global model.
+            </p>
+            <p id="watch-global-training" class="hidden">
+              Watch as your parameters effect the curve of the global model.
+            </p>
+            <p id="global-being-trained" class="hidden">
+              Global model in training.
+            </p>
+            <p id="global-training-complete" class="hidden">
+              The global model has now been updated with your parameters.<br /><br />This
+              improves the model's accuracy <b><u>NATIONWIDE</u></b
+              >.
+            </p>
 
-					<p id='vitals-message-1' class="hidden">Enough data has been gathered to meet the requirement to
-						find
-						your vitals.</p>
-					<p id='vitals-message-2' class="hidden">First, our Machine Learning algorithm identifies you from the video
-						footage.</p>
-					<p id='vitals-message-3' class="hidden">Next, your vitals concealed within biomarkers in your
-						appearance, are extracted.</p>
-					<p id='vitals-message-4' class="hidden">The vitals are then logged in your medical records which
-						only
-						you can access.</p>
+            <!--------------------------------------------------------------------->
+            <!----------------- ADDING MORE PEOPLE ------------------>
+            <!--------------------------------------------------------------------->
 
-					<!--------------------------------------------------------------------->
-					<!----------------- VITAL GATHERING MESSAGE SEQUENCE ------------------>
-					<!--------------------------------------------------------------------->
+            <p id="intro-more-people" class="hidden">
+              Now its time to add more people.<br /><br />As these people are
+              diagnosed, your model will improve without any data exchange.
+            </p>
+            <p id="other-global-training" class="hidden">
+              Someone's medical records were updated.<br /><br />Their
+              parameters were used to train the global model.
+            </p>
+            <p id="another-global-training" class="hidden">
+              The global model was re-trained again.<br /><br />Diagnosis
+              accuracy has improved.
+            </p>
 
-					<p id='risk-message-1' class="hidden">From your new vitals, your risk of different diseases is
-						calculated.</p>
+            <!--------------------------------------------------------------------->
+            <!----------------- ENDING SIMULATION ------------------>
+            <!--------------------------------------------------------------------->
 
-					<p id='see-doctor-message-1' class="hidden">One of your vitals has breached the risk threshold! You
-						will
-						recieve a notification from the app.</p>
-					<p id='see-doctor-message-2' class="hidden">Your risk of dermatological disease is
-						high.<br><br>Please
-						select a time to see a doctor.</p>
+            <p id="simulaton-over" class="hidden">
+              The simulation has now finished.<br /><br />We just have one
+              question...
+            </p>
+            <p id="how-much-data" class="hidden">
+              How comfortable were you with the data being gathered?<br /><br />Please
+              choose an option of how much data you would be willing to share
+              for the given accuracy.
+            </p>
+          </div>
+          <div id="continue-btn" class="hidden continue-btn">
+            <h5>Continue</h5>
+          </div>
+          <a href="./feedback.html">
+            <div id="feedback-btn" class="hidden continue-btn">
+              <h5>Continue</h5>
+            </div>
+          </a>
+        </div>
 
-					<!--------------------------------------------------------------------->
-					<!----------------- TRAIN GLOBAL MODEL ------------------>
-					<!--------------------------------------------------------------------->
+        <div id="phone" class="phone">
+          <div id="terminal-selector" class="">
+            <h4>_> command_line</h4>
+            <div id="terminal">
+              <div id="training-progress-bar"></div>
+              <p id="total-memory"></p>
+              <p id="video-memory"></p>
+              <p id="audio-memory"></p>
+              <div id="vitals-wrap" class="vitals-wrap">
+                <p id="vitals">Vitals</p>
+                <div class="vitals-row">
+                  <p>| Body Temp</p>
+                  <p id="BT"></p>
+                </div>
+                <div class="vitals-row">
+                  <p>| Blood Press</p>
+                  <p id="BP"></p>
+                </div>
+                <div class="vitals-row">
+                  <p>| Heart Rate</p>
+                  <p id="HR"></p>
+                </div>
+                <div class="vitals-row">
+                  <p>| Breathing Rate</p>
+                  <p id="RR"></p>
+                </div>
+              </div>
+              <div class="risk-wrap">
+                <p id="risk">Risk</p>
+                <div class="risks">
+                  <div class="risk" id="cardiovascular-risk"></div>
+                  <div class="risk" id="dermatology-risk"></div>
+                  <div class="risk" id="infection-risk"></div>
+                  <div class="risk" id="respiratory-risk"></div>
+                  <div class="risk" id="metabolic-risk"></div>
+                  <div class="risk" id="gastrointestinal-risk"></div>
+                </div>
+                <br />
+              </div>
+              <div class="progress">
+                <p id="find"></p>
+                <p id="identify"></p>
+                <p id="extract"></p>
+              </div>
+            </div>
+          </div>
+          <div id="UI-selector" class="hidden">
+            <div class="UI-Header">
+              <img class="image image-contain" src="images/header.png" />
+            </div>
 
-					<p id='doctor-feedback-1' class="hidden">Following your trip to your doctor, your results have been
-						logged in the NHS database.</p>
-					<p id='doctor-feedback-2' class="hidden">MILA.HEALTH will now learn from your updated medical
-						records.
-					</p>
-					<p id='training-over-1' class="hidden">Your local machine learning model has been sucessfully
-						trained.<br><br>Your diagnosis accuracy has been improved.</p>
-					<p id='global-training-start' class="hidden">The parameters from training your local model can now
-						be
-						fed back to the global model.</p>
-					<p id='watch-global-training' class="hidden">Watch as your parameters effect the curve of the global
-						model.</p>
-					<p id='global-being-trained' class="hidden">Global model in training.</p>
-					<p id='global-training-complete' class="hidden">The global model has now been updated with your
-						parameters.<br><br>This improves the model's accuracy <b><u>NATIONWIDE</u></b>.</p>
-
-					<!--------------------------------------------------------------------->
-					<!----------------- ADDING MORE PEOPLE ------------------>
-					<!--------------------------------------------------------------------->
-
-					<p id='intro-more-people' class="hidden">Now its time to add more people.<br><br>As these people are
-						diagnosed, your model will improve without any data exchange.</p>
-					<p id='other-global-training' class="hidden">Someone's medical records were updated.<br><br>Their
-						parameters were used to train the global model.</p>
-					<p id='another-global-training' class="hidden">The global model was re-trained again.<br><br>Diagnosis accuracy has improved.</p>
-
-					<!--------------------------------------------------------------------->
-					<!----------------- ENDING SIMULATION ------------------>
-					<!--------------------------------------------------------------------->
-
-					<p id='simulaton-over' class="hidden">The simulation has now finished.<br><br>We just have one question...</p>
-					<p id='how-much-data' class="hidden">How comfortable were you with the data being gathered?<br><br>Please choose an option of how much data you would be willing
-						to share for the given accuracy.</p>
-				</div>
-				<div id='continue-btn' class="hidden continue-btn">
-					<h5>Continue</h5>
-				</div>
-				<a href="./feedback.html">
-					<div id='feedback-btn' class="hidden continue-btn">
-						<h5>Continue</h5>
-					</div>
-				</a>
-			</div>
-
-			<div id='phone' class="phone">
-				<div id="terminal-selector" class="">
-					<h4>_> command_line</h4>
-					<div id="terminal">
-						<div id="training-progress-bar"></div>
-						<p id='total-memory'></p>
-						<p id='video-memory'></p>
-						<p id='audio-memory'></p>
-						<div id="vitals-wrap" class="vitals-wrap">
-							<p id='vitals'>Vitals</p>
-							<div class="vitals-row">
-								<p>| Body Temp</p>
-								<p id='BT'></p>
-							</div>
-							<div class="vitals-row">
-								<p>| Blood Press</p>
-								<p id='BP'></p>
-							</div>
-							<div class="vitals-row">
-								<p>| Heart Rate</p>
-								<p id='HR'></p>
-							</div>
-							<div class="vitals-row">
-								<p>| Breathing Rate</p>
-								<p id='RR'></p>
-							</div>
-						</div>
-						<div class="risk-wrap">
-							<p id='risk'>Risk</p>
-							<div class="risks">
-								<div class='risk' id="cardiovascular-risk"></div>
-								<div class='risk' id="dermatology-risk"></div>
-								<div class='risk' id="infection-risk"></div>
-								<div class='risk' id="respiratory-risk"></div>
-								<div class='risk' id="metabolic-risk"></div>
-								<div class='risk' id="gastrointestinal-risk"></div>
-							</div>
-							<br>
-						</div>
-						<div class="progress">
-							<p id="find"></p>
-							<p id="identify"></p>
-							<p id="extract"></p>
-						</div>
-					</div>
-				</div>
-				<div id="UI-selector" class="hidden">
-					<div class="notification">
-						<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-						<h3>You are advised to book an appointment with a dermatologist.</h3>
-					</div>
-					<div class="date">
-						<img src="./images/left-arrow.svg" alt="">
-						<h5>09-03-2042</h5>
-						<img src="./images/right-arrow.svg" alt="">
-					</div>
-					<div class="times-wrap">
-						<div class="times-row">
-							<div class="time">
-								<h5>10:15</h5>
-							</div>
-							<div class="time">
-								<h5>10:45</h5>
-							</div>
-							<div class="time">
-								<h5>11:30</h5>
-							</div>
-						</div>
-						<div class="times-row">
-							<div class="time">
-								<h5>12:15</h5>
-							</div>
-							<div class="time">
-								<h5>13:00</h5>
-							</div>
-							<div class="time">
-								<h5>13:30</h5>
-							</div>
-						</div>
-						<div class="times-row">
-							<div class="time">
-								<h5>15:15</h5>
-							</div>
-							<div class="time">
-								<h5>16:15</h5>
-							</div>
-							<div class="time">
-								<h5>16:30</h5>
-							</div>
-						</div>
-					</div>
-					<div class="phone-title-wrap">
-						<h3 class="phone-title">MILA.HEALTH</h3>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="">
-			<div class="balls-wrap">
-				<div class="ball hidden" id="ball"></div>
-				<div class="ball hidden" id="ball-1"></div>
-				<div class="ball hidden" id="ball-2"></div>
-				<div class="ball hidden" id="ball-3"></div>
-				<div class="ball hidden" id="ball-4"></div>
-				<div class="ball hidden" id="ball-5"></div>
-				<div class="ball hidden" id="ball-6"></div>
-				<div class="ball hidden" id="ball-7"></div>
-				<div class="ball hidden" id="ball-8"></div>
-				<div class="ball hidden" id="ball-9"></div>
-				<div class="ball hidden" id="ball-10"></div>
-				<div class="ball hidden" id="ball-11"></div>
-				<div class="ball hidden" id="ball-12"></div>
-				<div class="ball hidden" id="ball-13"></div>
-				<div class="ball hidden" id="ball-14"></div>
-				<div class="ball hidden" id="ball-15"></div>
-				<div class="ball hidden" id="ball-16"></div>
-				<div class="ball hidden" id="ball-17"></div>
-				<div class="ball hidden" id="ball-18"></div>
-				<div class="ball hidden" id="ball-19"></div>
-				<div class="ball hidden" id="ball-20"></div>
-				<div class="ball hidden" id="ball-21"></div>
-				<div class="ball hidden" id="ball-22"></div>
-				<div class="ball hidden" id="ball-23"></div>
-				<div class="ball hidden" id="ball-24"></div>
-				<div class="ball hidden" id="ball-25"></div>
-				<div class="ball hidden" id="ball-26"></div>
-				<div class="ball hidden" id="ball-27"></div>
-				<div class="ball hidden" id="ball-28"></div>
-				<div class="ball hidden" id="ball-29"></div>
-				<div class="ball hidden" id="ball-30"></div>
-			</div>
-			<div class="box" id="box"></div>
-			<div class="red-spot spot" id="red-spot">
-				<img src="./images/video-camera.svg" alt="CCTV icon">
-			</div>
-			<div class="green-spot spot" id="green-spot">
-				<img src="./images/phone-call.svg" alt="video camera icon">
-			</div>
-			<div class="blue-spot spot" id="blue-spot">
-				<img src="./images/video-call.svg" alt="video camera icon">
-
-			</div>
-			<div class="ellipse1" id="ellipse1"></div>
-			<div class="ellipse2" id="ellipse2"></div>
-			<div class="ellipse3" id="ellipse3"></div>
-
-		</div>
-
-	</div>
-
-</body>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<!-- <script type="text/javascript" src="Chart.js"></script> -->
-<!-- <script type="text/javascript" src="chartjs-plugin-style.js"></script> -->
-
+            <div class="notification">
+              <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+              <h3>
+                You are advised to book an appointment with a dermatologist.
+              </h3>
+            </div>
+            <div class="book-appointment">
+              <h5>Book an Appointment</h5>
+            </div>
+            <div class="location-place">
+              <h5>Exhibition Road, Kensington Practice</h5>
+            </div>
+            <div class="date">
+              <img src="./images/leftblack.svg" alt="" />
+              <h5>Tuesday 01 March</h5>
+              <img src="./images/rightblack.svg" alt="" />
+            </div>
+            <div class="times-wrap">
+              <div class="times-row">
+                <div class="time">
+                  <h5>10:15</h5>
+                </div>
+                <div class="time">
+                  <h5>10:45</h5>
+                </div>
+                <div class="time">
+                  <h5>11:30</h5>
+                </div>
+              </div>
+              <div class="times-row">
+                <div class="time">
+                  <h5>12:15</h5>
+                </div>
+                <div class="time">
+                  <h5>13:00</h5>
+                </div>
+                <div class="time">
+                  <h5>13:30</h5>
+                </div>
+              </div>
+              <div class="times-row">
+                <div class="time">
+                  <h5>15:15</h5>
+                </div>
+                <div class="time">
+                  <h5>16:15</h5>
+                </div>
+                <div class="time">
+                  <h5>16:30</h5>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="phone-title-wrap">
+              <h3 class="phone-title">MILA.HEALTH</h3>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <div class="balls-wrap">
+          <div class="ball hidden" id="ball"></div>
+          <div class="ball hidden" id="ball-1"></div>
+          <div class="ball hidden" id="ball-2"></div>
+          <div class="ball hidden" id="ball-3"></div>
+          <div class="ball hidden" id="ball-4"></div>
+          <div class="ball hidden" id="ball-5"></div>
+          <div class="ball hidden" id="ball-6"></div>
+          <div class="ball hidden" id="ball-7"></div>
+          <div class="ball hidden" id="ball-8"></div>
+          <div class="ball hidden" id="ball-9"></div>
+          <div class="ball hidden" id="ball-10"></div>
+          <div class="ball hidden" id="ball-11"></div>
+          <div class="ball hidden" id="ball-12"></div>
+          <div class="ball hidden" id="ball-13"></div>
+          <div class="ball hidden" id="ball-14"></div>
+          <div class="ball hidden" id="ball-15"></div>
+          <div class="ball hidden" id="ball-16"></div>
+          <div class="ball hidden" id="ball-17"></div>
+          <div class="ball hidden" id="ball-18"></div>
+          <div class="ball hidden" id="ball-19"></div>
+          <div class="ball hidden" id="ball-20"></div>
+          <div class="ball hidden" id="ball-21"></div>
+          <div class="ball hidden" id="ball-22"></div>
+          <div class="ball hidden" id="ball-23"></div>
+          <div class="ball hidden" id="ball-24"></div>
+          <div class="ball hidden" id="ball-25"></div>
+          <div class="ball hidden" id="ball-26"></div>
+          <div class="ball hidden" id="ball-27"></div>
+          <div class="ball hidden" id="ball-28"></div>
+          <div class="ball hidden" id="ball-29"></div>
+          <div class="ball hidden" id="ball-30"></div>
+        </div>
+        <div class="box" id="box"></div>
+        <div class="red-spot spot" id="red-spot">
+          <img src="./images/video-camera.svg" alt="CCTV icon" />
+        </div>
+        <div class="green-spot spot" id="green-spot">
+          <img src="./images/phone-call.svg" alt="video camera icon" />
+        </div>
+        <div class="blue-spot spot" id="blue-spot">
+          <img src="./images/video-call.svg" alt="video camera icon" />
+        </div>
+        <div class="ellipse1" id="ellipse1"></div>
+        <div class="ellipse2" id="ellipse2"></div>
+        <div class="ellipse3" id="ellipse3"></div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- <script type="text/javascript" src="Chart.js"></script> -->
+  <!-- <script type="text/javascript" src="chartjs-plugin-style.js"></script> -->
 </html>
