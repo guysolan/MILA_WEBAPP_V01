@@ -42,6 +42,7 @@ const introWords0 = document.getElementById('intro-words-0');
 const introWords1 = document.getElementById('intro-words-1')
 const introWords2 = document.getElementById('intro-words-2')
 const introWords3 = document.getElementById('intro-words-3')
+const introWords4 = document.getElementById('intro-words-4')
 
 const videoCallMessage = document.getElementById('video-call-message')
 const phoneCallMessage = document.getElementById('phone-call-message')
@@ -520,10 +521,13 @@ function update(time) {
     } else if (introCount == startIntro + 3) {
       showMessage(introWords3)
     }
+    else if (introCount == startIntro + 4) {
+      showMessage(introWords4)
+    }
 
 
     // -----------------SENSOR SEQUENCE------------------
-    if (introCount > startIntro + 3) {
+    if (introCount > startIntro + 4) {
       if (videoMessageShown == false && me.personElement.classList.contains('video-call')) {
         showMessage(videoCallMessage)
         videoMessageShown = true
