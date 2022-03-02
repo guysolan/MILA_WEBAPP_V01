@@ -494,6 +494,8 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
   }
 }
 
+let delay = 500;
+
 //MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//
 function update(time) {
 
@@ -553,24 +555,24 @@ function update(time) {
       if (vitalsMessagesCount == 0) {
         stopSensors()
         showMessage(vitalsMessage1)
-        messageAfterDelay(terminal_message.vitals1, 10)
+        messageAfterDelay(terminal_message.vitals1, delay)
         vitalsMessagesCount++
       } else if (vitalsMessagesCount == 1) {
         stopSensors()
         showMessage(vitalsMessage2)
-        messageAfterDelay(terminal_message.vitals2, 10)
+        messageAfterDelay(terminal_message.vitals2, delay)
 
         vitalsMessagesCount++
       } else if (showVitalsMessages == true && vitalsMessagesCount == 2) {
         stopSensors()
         showMessage(vitalsMessage3)
-        messageAfterDelay(terminal_message.vitals3, 10)
+        messageAfterDelay(terminal_message.vitals3, delay)
 
         vitalsMessagesCount++
       } else if (showVitalsMessages == true && vitalsMessagesCount == 3) {
         stopSensors()
         showMessage(vitalsMessage4)
-        messageAfterDelay(terminal_message.vitals4, 10)
+        messageAfterDelay(terminal_message.vitals4, delay)
         vitalsMessagesCount++
 
       } else if (showVitalsMessages == true && vitalsMessagesCount == 4) {
@@ -585,11 +587,12 @@ function update(time) {
         alterRisk1();
 
         showMessage(riskMessage1)
-        messageAfterDelay(terminal_message.risk1, 1)
-        messageAfterDelay(terminal_message.risk2, 2)
-        setTimeout(() => showAllRisks(), 5)
+        messageAfterDelay(terminal_message.risk1, delay)
+        messageAfterDelay(terminal_message.risk2, delay*2)
+        setTimeout(() => showAllRisks(), delay*3)
         vitalsMessagesCount++
-        me.start()
+        setTimeout(() => me.start(), delay*4)
+        
       }
     }
 
@@ -690,7 +693,7 @@ function update(time) {
     if (moreTrainGlobal && addMorePeople) {
 
       if (moreGlobalTrainingCount == 0) {
-        messageAfterDelay(terminal_message.globalTraining3, 200)
+        messageAfterDelay(terminal_message.globalTraining3, delay)
 
         // ---------------TRAIN GLOBAL MODEL-----------------
       } else if (moreGlobalTrainingCount < moreGlobalTrainingDuration) {
@@ -778,7 +781,6 @@ function update(time) {
         } else if (person == me && vitalsMessagesCount >= 3) {
           stopSensors()
           // VITALS SEQUENCE
-          let delay = 1000;
           messageAfterDelay(terminal_message.vitals1, 0)
           messageAfterDelay(terminal_message.vitals2, delay)
           messageAfterDelay(terminal_message.vitals3, delay*2)
@@ -792,13 +794,13 @@ function update(time) {
           if (showVitalsMessages == true && vitalsMessagesCount == 6) {
             alterRisk2();
             stopSensors();
-            setTimeout(me.personElement.classList.add('red'), delay*8)
-            setTimeout(showMessage(seeDoctorMessage1), delay*9)
-            messageAfterDelay(terminal_message.seeDoctor1, delay*9)
+            setTimeout(me.personElement.classList.add('red'), delay*7)
+            setTimeout(showMessage(seeDoctorMessage1), delay*8)
+            messageAfterDelay(terminal_message.seeDoctor1, delay*8)
             showDoctorMessages = true
             vitalsMessagesCount += 1
           }
-          setTimeout(() => showAllRisks(), delay*8)
+          setTimeout(() => showAllRisks(), delay*7)
         }
       }
 
