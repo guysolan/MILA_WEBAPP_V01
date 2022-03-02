@@ -38,6 +38,7 @@ const dateElem = document.getElementById('day')
 const continueBtn = document.getElementById('continue-btn')
 const feedbackBtn = document.getElementById('feedback-btn')
 
+const introWords0 = document.getElementById('intro-words-0');
 const introWords1 = document.getElementById('intro-words-1')
 const introWords2 = document.getElementById('intro-words-2')
 const introWords3 = document.getElementById('intro-words-3')
@@ -77,6 +78,8 @@ let anotherGlobalTraining = document.getElementById('another-global-training')
 const simulationOver = document.getElementById('simulaton-over')
 const maxBarWidth = 85;
 
+
+
 let clock = new Clock(dateElem)
 
 let myChart = new Chart(
@@ -97,7 +100,7 @@ let people = [me]
 let alreadyTrained = [me]
 
 let pause = false;
-let introCount = 1
+let introCount = 0
 
 messageAfterDelay(terminal_message.dashedLines, 0)
 messageAfterDelay(`PersonKey: ${me.personKey}`, 1)
@@ -504,10 +507,12 @@ function update(time) {
     }
 
     // ------------------INTRO SEQUENCE------------------
-
     introCount++;
-    if (introCount == startIntro) {
-      showMessage(introWords1);
+
+    if (introCount == startIntro-1) {
+      showMessage(introWords0);
+    } else if (introCount == startIntro) {
+      showMessage(introWords1)
     } else if (introCount == startIntro + 1) {
       showMessage(introWords2)
     } else if (introCount == startIntro + 2) {
@@ -515,6 +520,7 @@ function update(time) {
     } else if (introCount == startIntro + 3) {
       showMessage(introWords3)
     }
+
 
     // -----------------SENSOR SEQUENCE------------------
     if (introCount > startIntro + 3) {
@@ -790,18 +796,10 @@ function update(time) {
     })
 
     lightIcon(me, ['public', 'public-video'], 'CCTV')
-    // lightIcon(me, ['personal', 'personal-audio'], 'phone-call')
-    // lightIcon(me, ['personal', 'personal-audio', 'personal-video'], 'video-call')
 
     const personal = document.getElementById('personal')
     const personalAudio = document.getElementById('personal-audio')
     const personalVideo = document.getElementById('personal-video')
-    // const public = document.getElementById('public')
-    // const publicVideo = document.getElementById('public-audio')
-    // const publicAudio = document.getElementById('public-video')
-
-
-
 
     if (me.personElement.classList.contains('phone-call')) {
       let icons = [personal, personalAudio]
@@ -819,7 +817,6 @@ function update(time) {
         icon.classList.remove('active')
       })
     }
-
   }
 
   lastTime = time
