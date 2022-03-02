@@ -43,6 +43,7 @@ const introWords1 = document.getElementById('intro-words-1')
 const introWords2 = document.getElementById('intro-words-2')
 const introWords3 = document.getElementById('intro-words-3')
 const introWords4 = document.getElementById('intro-words-4')
+const introWords5 = document.getElementById('intro-words-5')
 
 const videoCallMessage = document.getElementById('video-call-message')
 const phoneCallMessage = document.getElementById('phone-call-message')
@@ -524,10 +525,13 @@ function update(time) {
     else if (introCount == startIntro + 4) {
       showMessage(introWords4)
     }
+    else if (introCount == startIntro + 5) {
+      showMessage(introWords5)
+    }
 
 
     // -----------------SENSOR SEQUENCE------------------
-    if (introCount > startIntro + 4) {
+    if (introCount > startIntro + 5) {
       if (videoMessageShown == false && me.personElement.classList.contains('video-call')) {
         showMessage(videoCallMessage)
         videoMessageShown = true
@@ -639,8 +643,8 @@ function update(time) {
       } else if (globalTrainingCount == 2) {
         showMessage(watchGlobalTraining)
         messageAfterDelay(terminal_message.globalTraining1, 10)
-        messageAfterDelay(terminal_message.globalTraining2, 260)
-        messageAfterDelay(terminal_message.globalTraining3, 500)
+        messageAfterDelay(terminal_message.globalTraining2, 1000)
+        messageAfterDelay(terminal_message.globalTraining3, 2000)
 
         // ---------------TRAIN GLOBAL MODEL-----------------
       } else if (globalTrainingCount < globalTrainingDuration) {
@@ -774,26 +778,27 @@ function update(time) {
         } else if (person == me && vitalsMessagesCount >= 3) {
           stopSensors()
           // VITALS SEQUENCE
+          let delay = 1000;
           messageAfterDelay(terminal_message.vitals1, 0)
-          messageAfterDelay(terminal_message.vitals2, 100)
-          messageAfterDelay(terminal_message.vitals3, 200)
-          messageAfterDelay(terminal_message.vitals4, 300)
-          setTimeout(() => cloneBottomOfTerminalbyID('vitals-wrap'), 500)
-          setTimeout(() => me.start(), 600)
+          messageAfterDelay(terminal_message.vitals2, delay)
+          messageAfterDelay(terminal_message.vitals3, delay*2)
+          messageAfterDelay(terminal_message.vitals4, delay*3)
+          setTimeout(() => cloneBottomOfTerminalbyID('vitals-wrap'), delay*4)
           // RISK SEQUENCE
-          messageAfterDelay(terminal_message.risk1, 1000)
-          messageAfterDelay(terminal_message.risk2, 1100)
+          messageAfterDelay(terminal_message.risk1, delay*5)
+          messageAfterDelay(terminal_message.risk2, delay*6)
+          setTimeout(() => me.start(), delay*6)
 
           if (showVitalsMessages == true && vitalsMessagesCount == 6) {
             alterRisk2();
             stopSensors();
-            setTimeout(me.personElement.classList.add('red'), 5000)
-            setTimeout(showMessage(seeDoctorMessage1), 10000)
-            messageAfterDelay(terminal_message.seeDoctor1, 10)
+            setTimeout(me.personElement.classList.add('red'), delay*8)
+            setTimeout(showMessage(seeDoctorMessage1), delay*9)
+            messageAfterDelay(terminal_message.seeDoctor1, delay*9)
             showDoctorMessages = true
             vitalsMessagesCount += 1
           }
-          setTimeout(() => showAllRisks(), 1500)
+          setTimeout(() => showAllRisks(), delay*8)
         }
       }
 
