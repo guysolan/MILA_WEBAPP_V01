@@ -67,7 +67,7 @@
 						By frequently checking your vitals, many diseases can be detected
 						before you even become sympomatic.
 					</p>
-					<p id="intro-words-4" class="hidden">Watch as you (the grey dot) move about your day, and data is saved to your phone.</p>
+					<p id="intro-words-4" class="hidden">Watch as you (the grey dot) move about you day, and data is saved to your phone.</p>
 					<p id="intro-words-5" class="hidden">The outer box represents the area you live in and the inner blobs show sites where you may be spotted by public cameras.</p>
 					
 					<!--------------------------------------------------------------------->
@@ -85,6 +85,13 @@
 					<p id="CCTV-message" class="hidden">
 						You were just sighted by a public camera.<br /><br />Watch as video data
 						gets saved to your phone.
+					</p>
+
+					<p id="sensor-explained-1" class="hidden">
+						During public / personal data gathering a blue audio icon or an orange video icon will light.
+					</p>
+					<p id="sensor-explained-2" class="hidden">
+						An outline of the same colour will also be added to your dot. 
 					</p>
 
 					<!--------------------------------------------------------------------->
@@ -123,7 +130,7 @@
 					</p>
 					<p id="see-doctor-message-2" class="hidden">
 						Your risk of dermatological disease is high.<br /><br />Please
-						select a time to see a doctor.
+						select a time to see a doctor.<br><br>(Your dot will remain red until diagnosis.)
 					</p>
 
 					<!--------------------------------------------------------------------->
@@ -355,12 +362,23 @@
 			</div>
 
 			<div id='symbols' class="symbols">
-				<img src="./images/person.2.circle.fill.svg" id='public' alt="Public">
-				<img src="./images/mic.circle.svg" id='public-audio' alt="Public">
-				<img src="./images/video.circle.svg" id='public-video' alt="Public">
-				<img src="./images/person.crop.circle.fill.svg" id='personal' alt="Public">
-				<img src="./images/mic.circle.svg" id='personal-audio' alt="Public">
-				<img src="./images/video.circle.svg" id='personal-video' alt="Public">
+				<div id = 'public-wrap' class="symbols-wrap">
+					<div class="icons-wrap">
+						<img src="./images/person.2.circle.fill.svg" id='public' alt="Public">
+						<img src="./images/mic.circle.svg" id='public-audio' alt="Public">
+						<img src="./images/video.circle.svg" id='public-video' alt="Public">
+					</div>
+					<h5>Public</h5>
+				</div>
+				<div id = 'personal-wrap' class="symbols-wrap">
+					<div class="icons-wrap">
+						<img src="./images/person.crop.circle.fill.svg" id='personal' alt="Personal">
+						<img src="./images/mic.circle.svg" id='personal-audio' alt="Personal">
+						<img src="./images/video.circle.svg" id='personal-video' alt="Personal">
+					</div>
+					<h5>Personal</h5>
+				</div>
+
 			</div>
 			<div class="ellipse1" id="ellipse1">PUBLIC<br>CAMERA</div>
 			<div class="ellipse2" id="ellipse2">PUBLIC<br>CAMERA</div>

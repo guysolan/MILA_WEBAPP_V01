@@ -49,6 +49,9 @@ const videoCallMessage = document.getElementById('video-call-message')
 const phoneCallMessage = document.getElementById('phone-call-message')
 const CCTVMessage = document.getElementById('CCTV-message')
 
+const sensorExplained1 = document.getElementById('sensor-explained-1')
+const sensorExplained2 = document.getElementById('sensor-explained-2')
+
 const vitalsMessage1 = document.getElementById('vitals-message-1')
 const vitalsMessage2 = document.getElementById('vitals-message-2')
 const vitalsMessage3 = document.getElementById('vitals-message-3')
@@ -118,6 +121,8 @@ messageAfterDelay(terminal_message.dashedLines, 4)
 let videoMessageShown = false;
 let phoneMessageShown = false;
 let CCTVMessageShown = false;
+let sensorExplained = false;
+let sensorExplainedCount = 0;
 
 let vitalsMessagesCount = 0
 let showVitalsMessages = false
@@ -513,7 +518,7 @@ function update(time) {
     // ------------------INTRO SEQUENCE------------------
     introCount++;
 
-    if (introCount == startIntro-1) {
+    if (introCount == startIntro - 1) {
       showMessage(introWords0);
     } else if (introCount == startIntro) {
       showMessage(introWords1)
@@ -523,11 +528,9 @@ function update(time) {
       showMessage(introWords3)
     } else if (introCount == startIntro + 3) {
       showMessage(introWords3)
-    }
-    else if (introCount == startIntro + 4) {
+    } else if (introCount == startIntro + 4) {
       showMessage(introWords4)
-    }
-    else if (introCount == startIntro + 5) {
+    } else if (introCount == startIntro + 5) {
       showMessage(introWords5)
     }
 
@@ -546,6 +549,23 @@ function update(time) {
         showMessage(CCTVMessage)
         CCTVMessageShown = true
       }
+    
+    }
+
+    if (sensorExplained == false) {
+      if (videoMessageShown == true || phoneMessageShown == true || CCTVMessageShown == true) {
+        sensorExplainedCount++;
+      }
+      if (sensorExplainedCount == 2) {
+        showMessage(sensorExplained1)
+        sensorExplainedCount++;
+      } else if (sensorExplainedCount == 4) {
+        showMessage(sensorExplained2)
+        sensorExplainedCount++;
+        sensorExplained = true
+
+      }
+
     }
 
 
@@ -588,11 +608,11 @@ function update(time) {
 
         showMessage(riskMessage1)
         messageAfterDelay(terminal_message.risk1, delay)
-        messageAfterDelay(terminal_message.risk2, delay*2)
-        setTimeout(() => showAllRisks(), delay*3)
+        messageAfterDelay(terminal_message.risk2, delay * 2)
+        setTimeout(() => showAllRisks(), delay * 3)
         vitalsMessagesCount++
-        setTimeout(() => me.start(), delay*4)
-        
+        setTimeout(() => me.start(), delay * 4)
+
       }
     }
 
@@ -783,47 +803,48 @@ function update(time) {
           // VITALS SEQUENCE
           messageAfterDelay(terminal_message.vitals1, 0)
           messageAfterDelay(terminal_message.vitals2, delay)
-          messageAfterDelay(terminal_message.vitals3, delay*2)
-          messageAfterDelay(terminal_message.vitals4, delay*3)
-          setTimeout(() => cloneBottomOfTerminalbyID('vitals-wrap'), delay*4)
+          messageAfterDelay(terminal_message.vitals3, delay * 2)
+          messageAfterDelay(terminal_message.vitals4, delay * 3)
+          setTimeout(() => cloneBottomOfTerminalbyID('vitals-wrap'), delay * 4)
           // RISK SEQUENCE
-          messageAfterDelay(terminal_message.risk1, delay*5)
-          messageAfterDelay(terminal_message.risk2, delay*6)
-          setTimeout(() => me.start(), delay*6)
+          messageAfterDelay(terminal_message.risk1, delay * 5)
+          messageAfterDelay(terminal_message.risk2, delay * 6)
+          setTimeout(() => me.start(), delay * 6)
 
           if (showVitalsMessages == true && vitalsMessagesCount == 6) {
             alterRisk2();
             stopSensors();
-            setTimeout(me.personElement.classList.add('red'), delay*7)
-            setTimeout(showMessage(seeDoctorMessage1), delay*8)
-            messageAfterDelay(terminal_message.seeDoctor1, delay*8)
+            setTimeout(me.personElement.classList.add('red'), delay * 7)
+            setTimeout(showMessage(seeDoctorMessage1), delay * 8)
+            messageAfterDelay(terminal_message.seeDoctor1, delay * 8)
             showDoctorMessages = true
             vitalsMessagesCount += 1
           }
-          setTimeout(() => showAllRisks(), delay*7)
+          setTimeout(() => showAllRisks(), delay * 7)
         }
       }
 
     })
 
-    lightIcon(me, ['public', 'public-video'], 'CCTV')
+    lightIcon(me, ['public', 'public-video', 'public-wrap'], 'CCTV')
 
     const personal = document.getElementById('personal')
     const personalAudio = document.getElementById('personal-audio')
     const personalVideo = document.getElementById('personal-video')
+    const personalWrap = document.getElementById('personal-wrap')
 
     if (me.personElement.classList.contains('phone-call')) {
-      let icons = [personal, personalAudio]
+      let icons = [personal, personalAudio, personalWrap]
       icons.forEach((icon) => {
         icon.classList.add('active')
       })
     } else if (me.personElement.classList.contains('video-call')) {
-      let icons = [personal, personalAudio, personalVideo]
+      let icons = [personal, personalAudio, personalVideo, personalWrap]
       icons.forEach((icon) => {
         icon.classList.add('active')
       })
     } else {
-      let icons = [personal, personalAudio, personalVideo]
+      let icons = [personal, personalAudio, personalVideo, personalWrap]
       icons.forEach((icon) => {
         icon.classList.remove('active')
       })
