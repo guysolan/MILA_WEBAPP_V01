@@ -206,7 +206,7 @@ export default class Person {
             this.takeCall('phone-call', green_spot, 600, 150, false)
         }
         if (!(this.personElement.classList.contains('phone-call'))) {
-            this.takeCall('video-call', blue_spot, 1000, 150, true)
+            this.takeCall('video-call', blue_spot, 1000, 120, true)
         }
 
         // ------------------------------------------------------------------------
