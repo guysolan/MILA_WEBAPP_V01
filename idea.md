@@ -15,3 +15,7 @@ Write function to convert from vitals to percentage chance of disease with 80% a
 ## Potential Improvements
 
 Allow user to add their gender, age and maybe name at the start.
+
+favicon - feedback
+
+media queries - block ipad
