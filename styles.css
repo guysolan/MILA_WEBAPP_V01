@@ -545,18 +545,17 @@ body {
   display: none;
 }
 
-
-.ball.video-call,.ball.phone-call.CCTV {
-  box-shadow: 0 0 0 3px var(--audio-color), 0 0 0 6px var(--video-color);
-
-}
-
 .ball.phone-call{
   box-shadow: 0 0 0 3px var(--audio-color);
 }
 
 .ball.CCTV{
   box-shadow: 0 0 0 3px var(--video-color);
+}
+
+.ball.video-call,.ball.phone-call.CCTV,.ball.video-call.CCTV {
+  box-shadow: 0 0 0 3px var(--audio-color), 0 0 0 6px var(--video-color);
+
 }
 
 .spot {
