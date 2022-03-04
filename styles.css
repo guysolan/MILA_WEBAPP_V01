@@ -669,7 +669,7 @@ body {
 }
 
 .option-outer{
-  padding-top: 6rem;
+  /* padding-top: 8rem; */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -706,6 +706,16 @@ body {
   width: 100%;
 }
 
+.option h6{
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0.5rem auto;
+  padding: 0.75rem;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  font-weight: 300;
+}
+
 .option.left{
   margin-right: 0.5rem;
 }
@@ -720,18 +730,18 @@ body {
 
 .option h3 {
   text-align: center;
-  margin: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
   font-weight: 600;
-
+  font-size: 1.2rem;
 }
 
-.stats-row {
+/* .stats-row {
   display: flex;
   justify-content: space-between;
 }
 
 .stat {
-  /* padding: 0 0.5rem; */
   align-items: center;
   text-align: center;
 }
@@ -747,14 +757,14 @@ body {
 .stat h2{
   font-size: 1.2rem;
   margin-bottom: 0.25rem;
-}
+} */
 
 .stat p{
   font-size: 0.75rem;
 }
 
 .included-para{
-  margin: 0.5rem 0;
+  margin: 1rem 0;
 }
 
 .included-row h4{
