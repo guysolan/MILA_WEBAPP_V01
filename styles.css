@@ -679,8 +679,9 @@ body {
   margin: 1.5rem 0;
   text-align: right;
   padding: 0.75rem;
-  border-radius: 1rem;
-  border: 2px solid white;
+  /* border-radius: 1rem; */
+  border-top: 2px solid white;
+  /* border-bottom: 2px solid white; */
 }
 .option-key p{
   color: white;
@@ -699,7 +700,7 @@ body {
 }
 
 .option {
-  padding: 1.5rem 1rem;
+  padding: 1rem 1rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
   width: 100%;
@@ -720,7 +721,7 @@ body {
 .option h3 {
   text-align: center;
   margin: 0.5rem;
-  font-weight: 300;
+  font-weight: 600;
 
 }
 
@@ -777,6 +778,7 @@ body {
   width: 100%;
   text-align: center;
   margin: auto;
+  padding: 0.25rem;
 }
 
 .checkbox {
@@ -791,7 +793,7 @@ input[type="checkbox"] {
 
 .continue-btn.choose {
   background-color: var(--foreground-color);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   margin-top: 1rem;
   padding: 0;
   cursor: pointer;
@@ -805,7 +807,7 @@ input[type="checkbox"] {
 .continue-btn.choose button {
   height: 100%;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   border-radius: 1rem;
   background-color: rgba(255, 0, 0, 0);
   color: white;
