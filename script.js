@@ -2,7 +2,6 @@ import CCTV from "./CCTV.js"
 import Clock from "./clock.js"
 import Person from "./person.js"
 import * as maths from './maths.js'
-import * as diseases from './disease-graph.js'
 import sensorFn from "./sensorFn.js"
 import CLOUD from "./CLOUD.js"
 import terminal_message from './terminal-messages.js'

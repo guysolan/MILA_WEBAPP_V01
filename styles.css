@@ -158,7 +158,8 @@ html {
 }
 
 .blurb-wrap.feedback{
-  margin: 0 3vw 0 5vw;
+  width: 15vw;
+  margin: 0 3vw 0 0vw;
 }
 
 .blurb-wrap h1 {
@@ -663,25 +664,42 @@ body {
   align-items: center;
   justify-content: space-between;
   margin: auto;
+  width: 90vw;
   height: 100vh;
 }
 
 .option-wrap {
   display: flex;
   color: white;
-  margin-right: 1rem;
+  justify-content: space-between;
+  width: 75vw;
+
 }
 
 .option {
-  padding: 1.25rem 0.75rem;
+  padding: 1.5rem 1rem;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
-  margin: 0 0.75rem;
+  width: 100%;
+}
+
+.option.left{
+  margin-right: 0.5rem;
+}
+
+.option.mid{
+  margin: 0 0.5rem;
+}
+
+.option.right{
+  margin-left: 0.5rem;
 }
 
 .option h3 {
   text-align: center;
   margin: 0.5rem;
+  font-weight: 300;
+
 }
 
 .stats-row {
@@ -695,6 +713,7 @@ body {
   text-align: center;
 }
 
+
 .stat.left{
   padding-right: 0.5rem;
 }
@@ -702,8 +721,28 @@ body {
   padding-left: 0.5rem;
 }
 
+.stat h2{
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
 .stat p{
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+}
+
+.included-para{
+  margin: 0.5rem 0;
+}
+
+.included-row h4{
+  font-size: 1rem;
+  margin: 0.25rem 0;
+
+}
+
+.included-row p{
+  font-size: 0.75rem;
+  margin: 0.25rem 0;
 }
 
 .included-row {
