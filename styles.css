@@ -668,6 +668,28 @@ body {
   height: 100vh;
 }
 
+.option-outer{
+  padding-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.option-key{
+  align-self: flex-end;
+  margin: 1.5rem 0;
+  text-align: right;
+  padding: 0.75rem;
+  border-radius: 1rem;
+  border: 2px solid white;
+}
+.option-key p{
+  color: white;
+  padding: 0;
+  margin: 0 auto;
+  font-size: 0.85rem;
+
+}
+
 .option-wrap {
   display: flex;
   color: white;
@@ -752,7 +774,7 @@ body {
 }
 
 .continue-btn.choose {
-  width: fit-content;
+  width: 100%;
   text-align: center;
   margin: auto;
 }
