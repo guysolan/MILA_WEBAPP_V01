@@ -539,7 +539,9 @@ function update(time) {
     } else if (introCount == startIntro + 2) {
       showMessage(introWords3)
     } else if (introCount == startIntro + 3) {
+      showMessage(introWords4)
     } else if (introCount == startIntro + 4) {
+      showMessage(introWords5)
     }
 
 
