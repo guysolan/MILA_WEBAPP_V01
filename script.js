@@ -110,9 +110,9 @@ messageAfterDelay(terminal_message.dashedLines, 0)
 messageAfterDelay(`PersonKey: ${me.personKey}`, 1)
 messageAfterDelay(`Age: ${me.getAge()} year old`, 2)
 if (me.female) {
-  messageAfterDelay(`Female = <span class="green">${me.female}</span>`, 3)
+  messageAfterDelay(`Female`, 3)
 } else {
-  messageAfterDelay(`Female = <span class="red">${me.female}</span>`, 3)
+  messageAfterDelay(`Male`, 3)
 }
 messageAfterDelay(terminal_message.dashedLines, 4)
 
@@ -144,6 +144,9 @@ let moreTrainGlobal = false;
 let moreGlobalTrainingCount = 0;
 let moreGlobalTrainingDuration = 50;
 let ballBeingTrained;
+
+let progress = 0;
+let progress_inc = 100 / 27;
 
 let otherGlobalShown = false;
 
@@ -258,7 +261,7 @@ function showFeedbackMessage(message) {
 let allMessages = Array.from(document.querySelector('#all-messages').children);
 
 function unPause() {
-  // console.log('unPause')
+  updateProgress()
   pause = false;
   continueBtn.classList.add('hidden')
   allMessages.forEach((message) => {
@@ -498,6 +501,16 @@ function showData(data_className = 'video-call', memory_type, dataType = 'video'
   }
 }
 
+const progressElem = document.getElementById('progress')
+
+
+function updateProgress() {
+  if(progress<95){
+    progress += progress_inc
+  }
+  progressElem.style.width = `${progress}%`
+}
+
 let delay = 500;
 
 //MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//MAIN FUNCTION//
@@ -526,10 +539,8 @@ function update(time) {
     } else if (introCount == startIntro + 2) {
       showMessage(introWords3)
     } else if (introCount == startIntro + 3) {
-      showMessage(introWords4)
     } else if (introCount == startIntro + 4) {
-      showMessage(introWords5)
-    } 
+    }
 
 
     // -----------------SENSOR SEQUENCE------------------
@@ -540,26 +551,31 @@ function update(time) {
       }
       if (phoneMessageShown == false && me.personElement.classList.contains('phone-call')) {
         showMessage(phoneCallMessage)
+
         phoneMessageShown = true
       }
       if (CCTVMessageShown == false && me.personElement.classList.contains('CCTV')) {
         showMessage(CCTVMessage)
+
         CCTVMessageShown = true
       }
-    
+
     }
 
     if (sensorExplained == false) {
       if (videoMessageShown == true || phoneMessageShown == true || CCTVMessageShown == true) {
         sensorExplainedCount++;
+
       }
       if (sensorExplainedCount == 2) {
         showMessage(sensorExplained1)
         sensorExplainedCount++;
+
       } else if (sensorExplainedCount == 4) {
         showMessage(sensorExplained2)
         sensorExplainedCount++;
         sensorExplained = true
+
 
       }
 
@@ -574,12 +590,14 @@ function update(time) {
         showMessage(vitalsMessage1)
         messageAfterDelay(terminal_message.vitals1, delay)
         vitalsMessagesCount++
+
       } else if (vitalsMessagesCount == 1) {
         stopSensors()
         showMessage(vitalsMessage2)
         messageAfterDelay(terminal_message.vitals2, delay)
 
         vitalsMessagesCount++
+
       } else if (showVitalsMessages == true && vitalsMessagesCount == 2) {
         stopSensors()
         showMessage(vitalsMessage3)
@@ -623,21 +641,25 @@ function update(time) {
         showMessage(seeDoctorMessage2, false)
         me.start()
         doctorMessagesCount++
+
       } else if (doctorMessagesCount == 1) {
         swapTerminalUI()
         doctorMessagesCount++
       } else if (doctorMessagesCount < doctorFeedbackTime) {
         doctorMessagesCount++
+
       } else if (doctorMessagesCount == doctorFeedbackTime) {
         stopSensors()
         showMessage(doctorFeedback1)
         doctorMessagesCount++
+
       } else if (doctorMessagesCount == doctorFeedbackTime + 1) {
         me.personElement.classList.remove('red')
         stopSensors()
         showMessage(doctorFeedback2)
         messageAfterDelay(terminal_message.training1, 0)
         doctorMessagesCount++
+
         startTraining = true
       }
     }
@@ -650,6 +672,7 @@ function update(time) {
         trainingMessagesShown = 1
         startTraining = false
         trainGlobal = true
+
       }
     }
     if (trainGlobal == true) {
@@ -680,6 +703,7 @@ function update(time) {
         messageAfterDelay(terminal_message.globalTraining4, 10)
         trainGlobal = false
         addMorePeople = true
+
       }
       if (trainGlobal) {
         globalTrainingCount++
@@ -695,6 +719,7 @@ function update(time) {
         showMessage(introMorePeople)
       } else if (morePeopleCount == morePeopleDelay + 1) {
         morePeople(20)
+
       }
     }
 
@@ -703,6 +728,7 @@ function update(time) {
     if (otherGlobalShown == 3) {
       console.log('End Simulation')
       showFeedbackMessage(simulationOver)
+
     }
 
     // -----------------MORE PEOPLE GLOBAL TRAINING----------------
@@ -725,9 +751,11 @@ function update(time) {
         me.start()
         if (otherGlobalShown == 0) {
           showMessage(otherGlobalTraining)
+
         }
         if (otherGlobalShown > 0 && otherGlobalShown < 3) {
           showMessage(anotherGlobalTraining)
+
         }
         otherGlobalShown++
         messageAfterDelay(terminal_message.globalTraining4, 10)
